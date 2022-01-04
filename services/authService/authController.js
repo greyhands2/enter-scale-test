@@ -342,7 +342,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 	staff.password = req.body.password;
 	staff.passwordConfirm = req.body.passwordConfirm;
 	verifiedStatus=staff.active;
-	await staff.save();
+	staff=await staff.save();
 
 
 	// 4.) log Staff in
