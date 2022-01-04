@@ -60,7 +60,7 @@ router.route('/')
 router.route('/:id')
 .get(fetchStaff)
 .patch(editStaff);
-// .delete(deleteStaff);
+
 
 
 
