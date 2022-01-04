@@ -7,8 +7,10 @@ const ClockIn= require('../models/clockInModel.js')
 
 
 exports.addClockIn=catchAsync(async(req,res,next)=>{
-    console.log('i got here')
+    
     let currentMonth= new Date(Date.now()).toLocaleString('default', { month: 'long' });
+    console.log('i got here',currentMonth)
+    console.log(req.staff.id)
     await ClockIn.findOne({staff:req.staff.id},async function(err, doc){
         console.log('d doc', doc)
         if(err) return next(new AppError("Something Went Wrong", 500));

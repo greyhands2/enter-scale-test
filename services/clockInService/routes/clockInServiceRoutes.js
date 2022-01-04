@@ -10,7 +10,7 @@ const router = express.Router();
 router.use(shield)
 
 
-router.post('/addClockIn/:staffId', addClockIn);
+router.post('/addClockIn', addClockIn);
 router.use(restrictTo("admin"))
 router.get("/getStaffClockin/:staffId", getStaffClockin)
 
