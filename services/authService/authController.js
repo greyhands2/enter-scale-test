@@ -225,7 +225,7 @@ exports.forgotPassword = catchAsync(async(req, res, next) => {
 
 	if(!(!!req.body.email)) return next(new AppError('Please Provide a valid email', 404));
 	// 1.) get Staff based on posted email
-	var staff = await Staff.findOne({email:req.body.email});
+	let staff = await Staff.findOne({email:req.body.email});
 	if(!staff){
 		return next(new AppError('There is no Staff with email address', 404));
 	}
@@ -241,7 +241,7 @@ exports.forgotPassword = catchAsync(async(req, res, next) => {
 	
 
 	
-	const message = `Forgot your Password? Use this OTP alongside your email and new password to change your password: ${resetToken}.\n  If You Did'nt Forget Your Password Please Ignore This Email`;
+	const message = `Forgot your Password? Use this OTP alongside your email and new password to change your password: ${resetToken}.  If You Did'nt Forget Your Password Please Ignore This Email`;
 	
 	emailComposer(staff, message, "Your Password Reset Token (Valid For 10 Mins)", 'passwordReset');
 	return res.status(200)
