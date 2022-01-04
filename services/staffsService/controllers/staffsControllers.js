@@ -1,13 +1,13 @@
 
 
-const factory = require('../../utils/factoryHandlers.js');
+const factory = require('../../../utils/factoryHandlers.js');
 const Staff = require('../models/staffsModel.js');
 
-const setMe = require('../../utils/setMe.js');
-const catchAsync = require('../../utils/catchControllerAsyncs.js');
+const setMe = require('../../../utils/setMe.js');
+const catchAsync = require('../../../utils/catchControllerAsyncs.js');
 
 const AppError = require('../../errorService/AppErrorModule.js');
-const emailComposer = require('../../utils/emailComposer.js');
+const emailComposer = require('../../../utils/emailComposer.js');
 
 // middleware for setMe
 exports.setMe = setMe;

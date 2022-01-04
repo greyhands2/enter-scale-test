@@ -4,7 +4,7 @@ const {promisify} = require('util');
 const jwt = require('jsonwebtoken');
 const Staff = require('../staffsService/models/staffsModel.js');
 
-const catchAsync = require('../utils/catchControllerAsyncs.js');
+const catchAsync = require('../../utils/catchControllerAsyncs.js');
 
 const AppError = require('../errorService/AppErrorModule.js');
 
@@ -13,7 +13,7 @@ const AppError = require('../errorService/AppErrorModule.js');
 
 const {createAndSendToken} = require('./jwtThingies.js');
 
-const emailComposer = require('../utils/emailComposer.js');
+const emailComposer = require('../../utils/emailComposer.js');
 
 
 

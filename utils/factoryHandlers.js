@@ -1,7 +1,7 @@
 const APIFeatures = require('./APISpecialFeatures.js');
 
 const catchAsync = require('./catchControllerAsyncs.js');
-const AppError = require('../errorService/AppErrorModule.js');
+const AppError = require('../services/errorService/AppErrorModule.js');
 
 // we use factory functions here..they are functions that return other functions
 exports.deleteOne = (Model)=> catchAsync(async (req, res, next)=> {

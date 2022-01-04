@@ -56,12 +56,12 @@ app.all('*', (req, res, next) => {
 	
 	// error  initializing by using  the Error class object
 //using next() to pass error into express
-	const AppError = require('./errorService/AppErrorModule.js');
+	const AppError = require('./services/errorService/AppErrorModule.js');
 	next(new AppError(`Can't find ${req.originalUrl}  on this server!! 😫`, 404));
 });
 
 // using express's error handling middleware
 
-app.use(require('./errorService/errorController.js'));
+app.use(require('./services/errorService/errorController.js'));
 
 module.exports = app;
