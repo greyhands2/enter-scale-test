@@ -322,7 +322,7 @@ exports.verifyOTPClosure = (type) =>  catchAsync( async(req, res, next) => {
 exports.updatePassword = catchAsync(async (req, res, next) => {
 	let verifiedStatus;
 	// 1.) get the current Staff
-	const staff = await Staff.findById(req.Staff.id).select('+password');
+	const staff = await Staff.findById(req.staff.id).select('+password');
 
 
 
