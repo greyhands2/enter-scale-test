@@ -4,7 +4,7 @@ const {promisify} = require('util');
 const jwt = require('jsonwebtoken');
 const Staff = require('../staffsService/models/staffsModel.js');
 
-const catchAsync = require('../../utils/catchAsync.js');
+const catchAsync = require('../utils/catchControllerAsyncs.js');
 
 const AppError = require('../errorService/AppErrorModule.js');
 
