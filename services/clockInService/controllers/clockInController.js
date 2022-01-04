@@ -11,7 +11,7 @@ exports.addClockIn=catchAsync(async(req,res,next)=>{
     await ClockIn.findOne({staff:req.staff.id},async function(err, doc){
         console.log('d doc', doc)
         if(err) return next(new AppError("Something Went Wrong", 500));
-
+        console.log(doc.month, new Date(Date.now()).toLocaleString('default', { month: 'long' }));
         if(!doc || Object.keys(doc).length === 0 || doc.month.toString() !== new Date(Date.now()).toLocaleString('default', { month: 'long' }).toString()) {
             await ClockIn.create({staff:req.params.staffId, count:1 });
 
