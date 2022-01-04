@@ -12,7 +12,7 @@ exports.addClockIn=catchAsync(async(req,res,next)=>{
         console.log('d doc', doc)
         if(err) return next(new AppError("Something Went Wrong", 500));
 
-        if(!doc || Object.keys(doc).length === 0 || doc.month !== new Date(Date.now()).toLocaleString('default', { month: 'long' })) {
+        if(!doc || Object.keys(doc).length === 0 || doc.month.toString() !== new Date(Date.now()).toLocaleString('default', { month: 'long' }).toString()) {
             await ClockIn.create({staff:req.params.staffId, count:1 });
 
             return res.status(200).json({
