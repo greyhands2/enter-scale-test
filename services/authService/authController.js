@@ -275,12 +275,12 @@ exports.verifyOTPClosure = (type) =>  catchAsync( async(req, res, next) => {
 
   
 	  if(type === 'emailVerify'){
-		if(!(await staff.validatePassword(password, staff.password))) return next(new AppError('Oops!!! Something Went Wrong 🤔🤔🤔 Wrong Input', 401));
+		if(!(await staff.validatePassword(password, staff.password))) return next(new AppError('1Oops!!! Something Went Wrong 🤔🤔🤔 Wrong Input', 401));
 	  }
 		
 		
 	  
-		if(  !(staff.validateOTP(OTP, staff.otpToken, type))) return next(new AppError('Oops!!! Something Went Wrong 🤔🤔🤔 Wrong Input', 401));
+		if(  !(staff.validateOTP(OTP, staff.otpToken, type))) return next(new AppError('2Oops!!! Something Went Wrong 🤔🤔🤔 Wrong Input', 401));
 		else {
 			if(type==='resetPassword'){
 				staff.password = req.body.password;
