@@ -1,6 +1,6 @@
 const Queue = require('bull');
 const Email = require('./MyEmailer');
-const emailerQueuetty = new Queue('emailerQueuetty', process.env.REDIS_URL);
+const emailerQueuettyi = new Queue('emailerQueuettyi', process.env.REDIS_URL);
 
 
 
@@ -19,12 +19,12 @@ const emailComposer =  (staff, message, subject, template)=> {
 
 
 
-    emailerQueuetty.add(data);
+    emailerQueuettyi.add(data);
 
 }
 
 
-emailerQueuetty.process(doWork);
+emailerQueuettyi.process(doWork);
 
 
 
@@ -33,7 +33,8 @@ async function doWork(job, done){
     try {
         //todo uncomment below commented code
         console.log('proof redis works', job.data)
-        await new Email(job.data.email).send();
+        let emailObj= new Email(job.data.email)
+        await emailObj.send();
 
         job.thata="finished";
         done(false);
@@ -47,7 +48,7 @@ async function doWork(job, done){
 
 
 
-emailerQueuetty.on('completed', function (job) {
+emailerQueuettyi.on('completed', function (job) {
 
     if(job.thata==="restart") {
 
@@ -59,12 +60,12 @@ emailerQueuetty.on('completed', function (job) {
 
 
           };
-          const redoemailerQueuetty = new Queue('redoemailerQueuetty', process.env.REDIS_URL);
-        redoemailerQueuetty.add(job.data, jobOptions);
-        const initRetryQueue = () =>  redoemailerQueuetty.process(doWork);
+          const redoemailerQueuettyi = new Queue('redoemailerQueuettyi', process.env.REDIS_URL);
+        redoemailerQueuettyi.add(job.data, jobOptions);
+        const initRetryQueue = () =>  redoemailerQueuettyi.process(doWork);
         initRetryQueue();
 
-redoemailerQueuetty.on('completed',  async function (job) {
+redoemailerQueuettyi.on('completed',  async function (job) {
 
     if(job.thata==="finished") {
 
@@ -72,9 +73,9 @@ redoemailerQueuetty.on('completed',  async function (job) {
 
           
           
-          await redoemailerQueuetty.removeRepeatable(job.name, { ...job.opts.repeat });
+          await redoemailerQueuettyi.removeRepeatable(job.name, { ...job.opts.repeat });
 
-        //redoemailerQueuetty.close();
+        //redoemailerQueuettyi.close();
       }
     });
       }

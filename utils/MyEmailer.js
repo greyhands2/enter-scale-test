@@ -33,7 +33,7 @@ module.exports = class Email {
 			});
 	}
 
-	async send(){
+	 async send(){
 		// render html based on a pug template
 		const html = pug.renderFile(`${__dirname}/../views/email/${this.template}.pug`, {
 			firstName: this.firstName,
