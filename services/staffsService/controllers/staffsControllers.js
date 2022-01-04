@@ -138,7 +138,7 @@ exports.resendValidationEmail = catchAsync( async (req, res, next) => {
 	
 	// oya create OTP
 	const OTP = staff.createOTP();
-
+console.log(OTP)
 
 	await staff.save({validateBeforeSave: false});
 //send OTP to Staff email
