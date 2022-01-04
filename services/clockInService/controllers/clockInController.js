@@ -8,7 +8,7 @@ const ClockIn= require('../models/clockInModel.js')
 
 exports.addClockIn=catchAsync(async(req,res,next)=>{
     console.log('i got here')
-    await ClockIn.findOne({staff:req.params.staffId},async function(err, doc){
+    await ClockIn.findOne({staff:req.staff.id},async function(err, doc){
 
         if(err) return next(new AppError("Something Went Wrong", 500));
 
