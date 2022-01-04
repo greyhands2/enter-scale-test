@@ -43,7 +43,7 @@ exports.addClockIn=catchAsync(async(req,res,next)=>{
 
             return res.status(200).json({
                 status:"success",
-                message:"user clock in updated"
+                message:"user clock In updated"
             })
             }
             
