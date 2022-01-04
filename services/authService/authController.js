@@ -107,7 +107,7 @@ exports.login = catchAsync( async (req, res, next) => {
 	const staff = await Staff.findOne({email}).select('+password -__v');
 	// here we access the instance method we set to the StaffSchema to check if the password is correct
 	
-		if(!staff || !(await Staff.validatePassword(password, staff.password))){
+		if(!staff || !(await staff.validatePassword(password, staff.password))){
 		return next(new AppError('Incorrect Email or Password', 401));
 	}
 	
@@ -117,7 +117,7 @@ exports.login = catchAsync( async (req, res, next) => {
 	let {token, nuRes} =  createAndSendToken(staff, res );
 	
 	 staff.stoken = token;
-	let newStaff  = await Staff.save({validateBeforeSave: false});
+	let newStaff  = await staff.save({validateBeforeSave: false});
 
 
 	doTheNeedfulForLogin ({optionalMessage, statusCode: 200, token, newStaff, nuRes});
