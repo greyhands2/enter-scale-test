@@ -182,14 +182,14 @@ exports.shield = catchAsync(async(req, res, next)=> {
 	// 2.) verify the token
 	
 	const decoded = await promisify(jwt.verify)(token, process.env.JWTITTIES_SEACRIIT);
-	
+	console.log('decoded',decoded)
 	// 3.) check if Staff still exists if token was verified
 	const freshStaff = await Staff.findById(decoded.id);
 	if(!freshStaff || freshStaff.active !== "verified"){
 		return next(new AppError('This Staff no Longer Exists', 401));
 	}
 
-	console.log(freshStaff)
+	console.log(freshStaff.stoken)
 	if(freshStaff.stoken !== token) return next(new AppError('Token Expired Please Log In', 401));
 
 	// 4.) check if Staff changed password after the token was issued
