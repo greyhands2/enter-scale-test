@@ -50,7 +50,9 @@ app.use((req, res, next) => {
 
 	app.use(`${globs}/staffsService`, require('./services/staffsService/routes/staffsServiceRoutes'));
 
-	// app.use(`${globs}/clockInService`, require('./services/clockInService/routes/clockInServiceRoutes'));
+	app.use(`${globs}/clockInService`, require('./services/clockInService/routes/clockInServiceRoutes'));
+
+	
 
 
 
