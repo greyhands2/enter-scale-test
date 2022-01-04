@@ -2,7 +2,7 @@
 
 const {promisify} = require('util');
 const jwt = require('jsonwebtoken');
-const Staff = require('../../models/Staffs/StaffModel.js');
+const Staff = require('../../models/Staffs/StaffsModel.js');
 
 const catchAsync = require('../../utils/catchAsync.js');
 

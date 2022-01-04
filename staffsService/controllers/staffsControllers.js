@@ -1,7 +1,7 @@
 
 
 const factory = require('../../utils/factoryHandlers.js');
-const Staff = require('../../models/Staffs/StaffModel.js');
+const Staff = require('../../models/Staffs/StaffsModel.js');
 
 const setMe = require('../../utils/setMe.js');
 const catchAsync = require('../../utils/catchControllerAsyncs.js');
