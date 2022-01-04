@@ -12,6 +12,8 @@ const globs = process.env.BASE_NAME;
 //initialize express
 const app = express();
 const validEndPoints=require('./validEndPoints.js');
+let endPointImports={};
+validEndPoints.forEach(e => endPointImports[e]=require(`./services/${e}/routes/${e}Routes.js`));
 app.enable('trust proxy');
 //initialize pug for email ui
 app.set('view engine', 'pug');
@@ -48,7 +50,7 @@ app.use((req, res, next) => {
 
 //allow only valid endpoints
 validEndPoints.forEach((cur)=>{
-	app.use(`${globs}/${cur}`, require(`./services/${cur}/routes/${cur}Routes.js`));
+	app.use(`${globs}/${cur}`, endPointImports[cur]);
 })
 
 
