@@ -11,7 +11,7 @@ const compression = require('compression');
 const globs = process.env.BASE_NAME;
 //initialize express
 const app = express();
-
+const validEndPoints=require('./validEndPoints.js');
 app.enable('trust proxy');
 //initialize pug for email ui
 app.set('view engine', 'pug');
@@ -47,7 +47,7 @@ app.use((req, res, next) => {
 });
 
 //allow only valid endpoints
-require('./validEndPoints.js').forEach((cur)=>{
+validEndPoints.forEach((cur)=>{
 	app.use(`${globs}/${cur}`, require(`./${cur}/routes/${cur}Routes.js`));
 })
 
