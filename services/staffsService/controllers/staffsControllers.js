@@ -62,7 +62,7 @@ exports.updateMe = catchAsync( async (req,res, next) => {
 	if(req.Staff.email !== email	||	!!lastName	||	!!firstName	||	!!phone	||	!!dob){
 
 		 updatedStaff = await Staff.findById(req.Staff.id );
-		 updatedStaff.email = email	??	updatedStaff.email;
+		 updatedStaff.email = email ?? updatedStaff.email;
 		updatedStaff.firstName = firstName ?? updatedStaff.firstName;
 		updatedStaff.lastName = lastName ?? updatedStaff.lastName;
 		updatedStaff.phone = phone ?? updatedStaff.phone;
