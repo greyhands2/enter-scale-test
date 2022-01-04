@@ -205,7 +205,7 @@ req.staff = freshStaff;
 
 
 
-
+//restricts routes to certain type of user
 exports.restrictTo = (...roles) => {
 	// returning the middleware inside
 	return (req, res, next) => {
