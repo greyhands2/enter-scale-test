@@ -11,8 +11,11 @@ router.use(shield)
 
 
 router.post('/addClockIn', addClockIn);
-router.use(restrictTo("admin"))
-router.get("/getStaffClockin/:staffId", getStaffClockin)
+router.get("/getMyClockIns", getStaffClockin("staff"));
+router.use(restrictTo("admin"));
+router.get("/getStaffClockin/:staffId", getStaffClockin("admin"))
+
+
 
 router.get("/getAllStaffsClockin", getAllStaffsClockin)
  

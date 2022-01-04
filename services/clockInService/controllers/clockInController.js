@@ -62,11 +62,11 @@ exports.addClockIn=catchAsync(async(req,res,next)=>{
 
 
 
-exports.getStaffClockin=catchAsync(async(req,res,next)=>{
+exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
 
+    let query = type === "admin" ? req.params.staffId : req.staff.id;
 
-
-    await ClockIn.find({staff:req.params.staffId}, async function(err, docs){
+    await ClockIn.find({staff:query}, async function(err, docs){
 
         if(err) return next(new AppError("Something Went Wrong", 500));
 
