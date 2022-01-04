@@ -5,9 +5,13 @@ const htmlToText = require('html-to-text');
 
 module.exports = class Email {
 	constructor(options){
+		console.log("constructor ", options)
 		this.to = options.staff.email;
-		if(!!options.staff.firstName) this.firstName=options.staff.firstName;
-		else this.firstName=options.staff.email.split("@")[0];
+		if(!!options.staff.firstName){
+			this.firstName=options.staff.firstName;
+		} else {
+			 this.firstName=options.staff.email.split("@")[0];
+		}
 		this.message = options.message;
 		this.subject = options.subject;
 		this.template = options.template;
