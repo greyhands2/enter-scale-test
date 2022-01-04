@@ -16,6 +16,8 @@ module.exports = class Email {
 		this.subject = options.subject;
 		this.template = options.template;
 		this.from = `Enter Scale ${process.env.EMAIL_FROM}`;
+
+		console.log('firstname', this.firstName)
 	}
 
 
@@ -23,12 +25,12 @@ module.exports = class Email {
 		
 		return nodemailer.createTransport({
 				// service: 'Gmail',
-				host: process.env.EMAIL_HOST,
-				port: process.env.EMAIL_PORT,
-				auth: {
-					staff: process.env.EMAIL_USERNAME,
-					pass:process.env.EMAIL_PASSWORD
-				}
+				 host: "smtp.mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "6c5f0beb2c513f",
+    pass: "c6c4c2961ab8f7"
+  }
 				//activate in gmail less secure apps
 			});
 	}
