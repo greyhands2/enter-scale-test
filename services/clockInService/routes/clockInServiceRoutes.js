@@ -10,10 +10,10 @@ const router = express.Router();
 router.use(shield)
 
 
-router.post('addClockIn/:staffId', addClockIn);
+router.post('/addClockIn/:staffId', addClockIn);
 router.use(restrictTo("admin"))
-router.get("getStaffClockin/:staffId", getStaffClockin)
+router.get("/getStaffClockin/:staffId", getStaffClockin)
 
-router.get("getAllStaffsClockin", getAllStaffsClockin)
+router.get("/getAllStaffsClockin", getAllStaffsClockin)
  
 module.exports = router;
