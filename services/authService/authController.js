@@ -222,6 +222,8 @@ exports.restrictTo = (...roles) => {
 
 
 exports.forgotPassword = catchAsync(async(req, res, next) => {
+
+	if(!(!!email)) return next(new AppError('Please Provide a valid email', 404));
 	// 1.) get Staff based on posted email
 	var staff = await Staff.findOne({email:req.body.email});
 	if(!staff){
