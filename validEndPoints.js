@@ -1,2 +1,2 @@
-module.exports = ['staffsService'];
+module.exports = ['staffsService', 'clockInService'];
 

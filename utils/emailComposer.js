@@ -5,12 +5,12 @@ const emailerQueue = new Queue('emailerQueue', process.env.REDIS_URL);
 
 
 
-const emailComposer =  (user, message, subject, template)=> {
-    let pairData = {};
+const emailComposer =  (staff, message, subject, template)=> {
+    let data = {};
 
 
-    pairData.email = {
-        user,
+    data.email = {
+        staff,
         subject: subject,
         message: message,
         template: template
@@ -19,7 +19,7 @@ const emailComposer =  (user, message, subject, template)=> {
 
 
 
-    emailerQueue.add(pairData);
+    emailerQueue.add(data);
 
 }
 
