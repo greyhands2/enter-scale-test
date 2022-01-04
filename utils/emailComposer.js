@@ -1,6 +1,6 @@
 const Queue = require('bull');
 const Email = require('./MyEmailer');
-const emailerQueue = new Queue('emailerQueue', process.env.REDIS_URL);
+const emailerQueue = new Queue('emailerQueue', process.env.REDIS_TLS_URL);
 
 
 
