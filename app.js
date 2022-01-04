@@ -46,14 +46,10 @@ app.use((req, res, next) => {
 	next();
 });
 
-//endpoints
-
-	app.use(`${globs}/staffsService`, require('./services/staffsService/routes/staffsServiceRoutes'));
-
-	app.use(`${globs}/clockInService`, require('./services/clockInService/routes/clockInServiceRoutes'));
-
-	
-
+//allow only valid endpoints
+require('./validEndPoints.js').forEach((cur)=>{
+	app.use(`${globs}/${cur}`, require(`./services/${cur}/routes/${cur}Routes.js`));
+})
 
 
 app.all('*', (req, res, next) => {
