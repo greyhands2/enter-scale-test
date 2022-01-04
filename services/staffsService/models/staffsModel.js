@@ -172,7 +172,7 @@ StaffSchema.methods.validatePassword = async function(candidatePassword, StaffPa
 
 
 StaffSchema.methods.validateOTP =  function(candidateToken, token, type){
-
+	console.log('proofer', {type, token,candidateToken})
 	//compare function returns true or false that can be accessed in any file where the StaffSchema has been imported
 	if(crypto.createHash('sha256').update(candidateToken).digest('hex') === token){
 		
