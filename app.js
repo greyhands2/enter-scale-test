@@ -46,7 +46,7 @@ app.use((req, res, next) => {
 	next();
 });
 
-//allow only valid endpoints
+//endpoints
 
 	app.use(`${globs}/staffsService`, require('./services/staffService/routes/staffsServiceRoutes.js'));
 
