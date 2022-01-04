@@ -11,33 +11,48 @@ exports.addClockIn=catchAsync(async(req,res,next)=>{
     let currentMonth= new Date(Date.now()).toLocaleString('default', { month: 'long' });
     console.log('i got here',currentMonth)
     console.log(req.staff.id)
-    await ClockIn.find({staff:req.staff.id},async function(err, docs){
+    await ClockIn.find({ staff: req.staff.id },async function(err, docs){
         console.log('d doc', docs)
         if(err) return next(new AppError("Something Went Wrong", 500));
 
        
-        // if(!doc || Object.keys(doc).length === 0 || doc.month !== currentMonth) {
-        //     await ClockIn.create({staff:req.params.staffId, count:1 });
+        if(docs.length === 0 ) {
+           createAndRespond()
+        } else {
+            //check if staff has already started clocking in for the present month
+            let checkMonthIndex= docs.findIndex(e=>e.month.toString() === currentMonth.toString());
 
-        //     return res.status(200).json({
-        //         status:"success",
-        //         message:"user clock in updated for the new month"
-        //     })
-        // } else {
-        //     doc.count=doc.count+1;
+            if(checkMonthIndex === -1) {
+                //create
+                createAndRespond()
+            } else {
+                doc.count=doc.count+1;
 
-        //     await doc.save();
+            await doc.save();
 
-        //     return res.status(200).json({
-        //         status:"success",
-        //         message:"user clock in updated"
-        //     })
-        // }
+            return res.status(200).json({
+                status:"success",
+                message:"user clock in updated"
+            })
+            }
+            
+        }
         
 
 
 
     })
+
+
+
+    const createAndRespond=()=>{
+         await ClockIn.create({staff:req.staff.id, count:1 });
+
+            return res.status(200).json({
+                status:"success",
+                message:"user clock in updated for the new month"
+            })
+    }
 
 });
 
