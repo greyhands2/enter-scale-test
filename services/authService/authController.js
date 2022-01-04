@@ -342,11 +342,11 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 	staff.password = req.body.password;
 	staff.passwordConfirm = req.body.passwordConfirm;
 	verifiedStatus=staff.active;
-	staff=await staff.save();
+	let newStaff=await staff.save();
 
 
 	// 4.) log Staff in
-	createAndSendToken(staff, res);
+	createAndSendToken(newStaff, res);
 
 });
 
