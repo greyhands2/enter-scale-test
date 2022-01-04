@@ -173,7 +173,7 @@ exports.shield = catchAsync(async(req, res, next)=> {
 	if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
 		token = req.headers.authorization.split(' ')[1];
 	}
-	console.log("the token", token)
+	
 	if(!token || token ===''){
 		// status code 401 means unauthorized
 		return next(new AppError('Please Login to Get Access', 401));
@@ -182,7 +182,7 @@ exports.shield = catchAsync(async(req, res, next)=> {
 	// 2.) verify the token
 	
 	const decoded = await promisify(jwt.verify)(token, process.env.JWT_SEACRIIT);
-	console.log('decoded',decoded)
+	
 	// 3.) check if Staff still exists if token was verified
 	const freshStaff = await Staff.findById(decoded.id);
 	if(!freshStaff || freshStaff.active !== "verified"){
