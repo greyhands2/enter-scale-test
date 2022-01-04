@@ -189,7 +189,7 @@ exports.shield = catchAsync(async(req, res, next)=> {
 		return next(new AppError('This Staff no Longer Exists', 401));
 	}
 
-	console.log(freshStaff.stoken)
+	console.log("freshstaff",freshStaff.stoken)
 	if(freshStaff.stoken !== token) return next(new AppError('Token Expired Please Log In', 401));
 
 	// 4.) check if Staff changed password after the token was issued
