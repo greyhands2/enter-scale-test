@@ -257,7 +257,7 @@ exports.forgotPassword = catchAsync(async(req, res, next) => {
 
 
 exports.verifyOTPClosure = (type) =>  catchAsync( async(req, res, next) => {
-	
+	console.log(req.body)
 	const {email, password, OTP,passwordConfirm} = req.body;
   console.log(email,password)
   console.log(OTP,passwordConfirm)
