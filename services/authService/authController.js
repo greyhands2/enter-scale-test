@@ -346,7 +346,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
 
 	// 4.) log Staff in
-	createAndSendToken(staff, 200, res, verifiedStatus);
+	createAndSendToken(staff, res);
 
 });
 
