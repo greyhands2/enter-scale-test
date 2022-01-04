@@ -347,6 +347,9 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
 	// 4.) log Staff in
 	createAndSendToken(newStaff, res);
-
+	return res.status(200).json({
+		status:"success",
+		message:"successfully changed password"
+	})
 });
 
