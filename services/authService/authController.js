@@ -258,8 +258,9 @@ exports.forgotPassword = catchAsync(async(req, res, next) => {
 
 exports.verifyOTPClosure = (type) =>  catchAsync( async(req, res, next) => {
 	
-	const {email, password, OTP} = req.body;
-  
+	const {email, password, OTP,passwordConfirm} = req.body;
+  console.log(email,password)
+  console.log(OTP,passwordConfirm)
    const staff = await Staff.findOne({email: email, otpExpires: {$gt:Date.now()}}).select('+password +emailValidateToken ');
   
    if(!staff){
