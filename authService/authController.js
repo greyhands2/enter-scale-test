@@ -13,7 +13,7 @@ const AppError = require('../errorService/AppErrorModule.js');
 
 const {createAndSendToken} = require('./jwtThingies.js');
 
-const emailComposer = require('../../utils/emailComposer.js');
+const emailComposer = require('../utils/emailComposer.js');
 
 
 
