@@ -3,7 +3,7 @@ const express = require('express');
 
 const { fetchAllStaffs, createStaff, fetchStaff, editStaff,  updateMe, deleteMe, setMe, resendValidationEmail, fetchStaffSetPopulation} = require('../controllers/staffsControllers.js');
 
-const  { register, login, forgotPassword, updatePassword, shield, restrictTo, verifyOTPClosure, logout } = require('../../controllers/auth/authController.js');
+const  { register, login, forgotPassword, updatePassword, shield, restrictTo, verifyOTPClosure, logout } = require('../../authService/authController.js')
 
 const router = express.Router();
 
