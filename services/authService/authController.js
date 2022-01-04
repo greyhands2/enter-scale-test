@@ -24,7 +24,7 @@ const emailComposer = require('../../utils/emailComposer.js');
 exports.register = catchAsync( async (req, res, next) => {
 	const {password, passwordConfirm, email, porkipsee} = req.body; 
 	// porkipsee is used to be affirmative the new Staff being created is an admin.. and the porkipsee field has to be passed as "true" else a normal Staff
-	let role, active, creator;
+	let role, active;
 	if(porkipsee === "true"){
 		role="admin",
 		active="verified";
