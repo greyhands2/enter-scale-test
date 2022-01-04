@@ -17,18 +17,20 @@ exports.addClockIn=catchAsync(async(req,res,next)=>{
 
        
         if(docs.length === 0 ) {
-           createAndRespond()
+            //if user has not clockecd in for a new month then create new one
+           await createAndRespond()
         } else {
             //check if staff has already started clocking in for the present month
             let checkMonthIndex= docs.findIndex(e=>e.month.toString() === currentMonth.toString());
 
             if(checkMonthIndex === -1) {
-                //create
-                createAndRespond()
+                 //if user has not clockecd in for a new month then create new one
+                await createAndRespond()
             } else {
-                doc.count=doc.count+1;
+                docs[checkMonthIndex].count=docs[checkMonthIndex].count+1;
 
-            await doc.save();
+
+            await docs[checkMonthIndex].save();
 
             return res.status(200).json({
                 status:"success",
@@ -45,7 +47,7 @@ exports.addClockIn=catchAsync(async(req,res,next)=>{
 
 
 
-    const createAndRespond=()=>{
+    const createAndRespond=async ()=>{
          await ClockIn.create({staff:req.staff.id, count:1 });
 
             return res.status(200).json({
