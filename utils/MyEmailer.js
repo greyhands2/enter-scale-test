@@ -25,12 +25,12 @@ module.exports = class Email {
 		
 		return nodemailer.createTransport({
 				// service: 'Gmail',
-				 host: "smtp.mailtrap.io",
-  port: 2525,
-  auth: {
-    user: "6c5f0beb2c513f",
-    pass: "c6c4c2961ab8f7"
-  }
+				 host: process.env.EMAIL_HOST,
+  				port: process.env.EMAIL_PORT,
+  				auth: {
+    				user: process.env.EMAIL_USERNAME,
+    				pass: process.env.EMAIL_PASSWORD
+  				}
 				//activate in gmail less secure apps
 			});
 	}
