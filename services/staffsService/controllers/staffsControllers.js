@@ -162,7 +162,7 @@ exports.editStaff =  catchAsync( async (req, res, next) => {
 	
 	let editedStaff;
 	
-	const {active} = filterObj(req.body, "active");
+	const {active} = req.body;
 	
 	if(!active || ["suspended", "takenDown", "unverified"].indexOf(active) === -1) return res.status(400).json({status: "failed",
 message: "Wrong Input"
