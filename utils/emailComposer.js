@@ -1,6 +1,6 @@
 const Queue = require('bull');
 const Email = require('./MyEmailer');
-const emailerQueue = new Queue('emailerQueue', process.env.REDIS_TLS_URL);
+const emailerQueuet = new Queue('emailerQueuet', process.env.REDIS_TLS_URL);
 
 
 
@@ -8,7 +8,7 @@ const emailerQueue = new Queue('emailerQueue', process.env.REDIS_TLS_URL);
 const emailComposer =  (staff, message, subject, template)=> {
     let data = {};
 
-
+    console.log("i got here", staff)
     data.email = {
         staff,
         subject: subject,
@@ -19,12 +19,12 @@ const emailComposer =  (staff, message, subject, template)=> {
 
 
 
-    emailerQueue.add(data);
+    emailerQueuet.add(data);
 
 }
 
 
-emailerQueue.process(doWork);
+emailerQueuet.process(doWork);
 
 
 
@@ -47,7 +47,7 @@ async function doWork(job, done){
 
 
 
-emailerQueue.on('completed', function (job) {
+emailerQueuet.on('completed', function (job) {
 
     if(job.thata==="restart") {
 
@@ -59,12 +59,12 @@ emailerQueue.on('completed', function (job) {
 
 
           };
-          const redoemailerQueue = new Queue('redoemailerQueue', process.env.REDIS_URL);
-        redoemailerQueue.add(job.data, jobOptions);
-        const initRetryQueue = () =>  redoemailerQueue.process(doWork);
+          const redoemailerQueuet = new Queue('redoemailerQueuet', process.env.REDIS_URL);
+        redoemailerQueuet.add(job.data, jobOptions);
+        const initRetryQueue = () =>  redoemailerQueuet.process(doWork);
         initRetryQueue();
 
-redoemailerQueue.on('completed',  async function (job) {
+redoemailerQueuet.on('completed',  async function (job) {
 
     if(job.thata==="finished") {
 
@@ -72,9 +72,9 @@ redoemailerQueue.on('completed',  async function (job) {
 
           
           
-          await redoemailerQueue.removeRepeatable(job.name, { ...job.opts.repeat });
+          await redoemailerQueuet.removeRepeatable(job.name, { ...job.opts.repeat });
 
-        //redoemailerQueue.close();
+        //redoemailerQueuet.close();
       }
     });
       }
