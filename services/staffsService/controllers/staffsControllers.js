@@ -35,7 +35,7 @@ exports.fetchStaff = factory.getOne(Staff);
 
 exports.fetchStaffSetPopulation =  (req, res, next) => {
 	
-	if(req.Staff.role === 'Staff') req.body.populate=[ {path: 'clockIns', select: 'verifyStatus link name'}];
+	if(req.staff.role === 'staff') req.body.populate=[ {path: 'clockIns', select: 'verifyStatus link name'}];
 		
 	
 	
@@ -59,9 +59,9 @@ exports.updateMe = catchAsync( async (req,res, next) => {
 	// finally update Staff
 	let updatedStaff;
 	//ensure that if there is an email update , it isnt redundant and give room to update other staff data
-	if(req.Staff.email !== email	||	!!lastName	||	!!firstName	||	!!phone	||	!!dob){
+	if(req.staff.email !== email	||	!!lastName	||	!!firstName	||	!!phone	||	!!dob){
 
-		 updatedStaff = await Staff.findById(req.Staff.id );
+		 updatedStaff = await Staff.findById(req.staff.id );
 		 updatedStaff.email = email ?? updatedStaff.email;
 		updatedStaff.firstName = firstName ?? updatedStaff.firstName;
 		updatedStaff.lastName = lastName ?? updatedStaff.lastName;
@@ -76,7 +76,7 @@ exports.updateMe = catchAsync( async (req,res, next) => {
 	
 	if(!updatedStaff) return next(new AppError('Oopss!!! Something Went Wrong Try Again', 400));
 
-	if ((!!email === true && req.Staff.email !== email) ){
+	if ((!!email === true && req.staff.email !== email) ){
 		
 		// oya create OTP
 		updatedStaff.active = "unverified";
@@ -96,7 +96,7 @@ exports.updateMe = catchAsync( async (req,res, next) => {
 		status: "success",
 		message:  replyMessage,
 		//if the user sent redundant data or didnt end up updating anything then send no data else send updated data
-		StaffData: ( !!lastName || !!firstName	||	!!dob	||	!!phone)	?	updatedStaff	:	undefined
+		staffData: ( !!lastName || !!firstName	||	!!dob	||	!!phone)	?	updatedStaff	:	undefined
 	});
 	
 
@@ -132,19 +132,19 @@ exports.resendValidationEmail = catchAsync( async (req, res, next) => {
 		status: "Unsuccessful",
 		message:"Input an Email"
 	});
-	const Staff = await Staff.findOne({email});
-	if(!Staff) return next(new AppError("There is No Record of This Email", 404));
-	if(Staff.active === 'suspended' || Staff.active === 'takenDown') return next(new AppError("Your Account is Currently Not Allowed to Perform this Action", 500));
+	const staff = await Staff.findOne({email});
+	if(!staff) return next(new AppError("There is No Record of This Email", 404));
+	if(staff.active === 'suspended' || staff.active === 'takenDown') return next(new AppError("Your Account is Currently Not Allowed to Perform this Action", 500));
 	
 	// oya create OTP
-	const OTP = Staff.createOTP();
+	const OTP = staff.createOTP();
 
 
-	await Staff.save({validateBeforeSave: false});
+	await staff.save({validateBeforeSave: false});
 //send OTP to Staff email
 const message = `Welcome back, you know how it goes 🤓, your OTP is: ${OTP}, input that on the verify email page and you're all set Once Again 🤝`;
 
- emailComposer(Staff, message, "Would You Be So Kind as to Confirm Your Email Again", 'verifyEmail');
+ emailComposer(staff, message, "Would You Be So Kind as to Confirm Your Email Again", 'verifyEmail');
 
 
  return res.status(200)

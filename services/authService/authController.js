@@ -29,7 +29,7 @@ exports.register = catchAsync( async (req, res, next) => {
 		role="admin",
 		active="verified";
 	}  else {
-		role="Staff",
+		role="staff",
 		active="unverified";
 	}
 	
@@ -76,7 +76,7 @@ exports.logout = catchAsync(async(req, res, next)=>{
 		message:"Invalid Token"
 	});
 
-	await Staff.findOne({stoken: req.body.token, _id: req.Staff.id}).then((data)=>{
+	await Staff.findOne({stoken: req.body.token, _id: req.staff.id}).then((data)=>{
 		data.stoken=undefined;
 		data.save();
 		return res.status(200).json({
@@ -104,19 +104,19 @@ exports.login = catchAsync( async (req, res, next) => {
 	// step 2: check if Staff exists in db and if password is correct
 	//since we already set our Staff schema to never return a password i.e select:false, we need to explicitly select it here by adding + to the field name
 
-	const Staff = await Staff.findOne({email}).select('+password -__v');
+	const staff = await Staff.findOne({email}).select('+password -__v');
 	// here we access the instance method we set to the StaffSchema to check if the password is correct
 	
-		if(!Staff || !(await Staff.validatePassword(password, Staff.password))){
+		if(!staff || !(await Staff.validatePassword(password, staff.password))){
 		return next(new AppError('Incorrect Email or Password', 401));
 	}
 	
-	let optionalMessage=Staff.active;
+	let optionalMessage=staff.active;
 	
 	// 3.) if everything is ok send token to client
-	let {token, nuRes} =  createAndSendToken(Staff, res );
+	let {token, nuRes} =  createAndSendToken(staff, res );
 	
-	 Staff.stoken = token;
+	 staff.stoken = token;
 	let newStaff  = await Staff.save({validateBeforeSave: false});
 
 
@@ -128,15 +128,14 @@ exports.login = catchAsync( async (req, res, next) => {
 const doTheNeedfulForLogin = ({optionalMessage, statusCode, token, newStaff, nuRes}) => {
 	newStaff.password=undefined;
 	newStaff.__v = undefined;
-	// Staff.active=undefined;
-	// Staff.role = undefined;
-	// we use status 201 for created
+	
+	
 	if(optionalMessage === 'verified'){
 		return nuRes.status(statusCode).json({
 		status: 'success',
 		token: token,
 		data:{
-			Staff: newStaff
+			staff: newStaff
 		} 
 	});
 
@@ -197,20 +196,20 @@ exports.shield = catchAsync(async(req, res, next)=> {
 	}
 
 //since the Staff has access rights the Staff obj can be useful for determining which data to show to the Staff in the future, we then attach this Staff to the req object
-req.Staff = freshStaff;
+req.staff = freshStaff;
 // so then grant access to the protected route
 	next();
 });
 
 
-// because this is a middleware we cannot mormally pass arguments so we then return the middleware wrapped inside a function (a closure therefore), also since this middleware can take an indefinite number of arguments we put an array into it using es6 syntax..
+
 
 exports.restrictTo = (...roles) => {
 	// returning the middleware inside
 	return (req, res, next) => {
 		// note the req.Staff.role here is gotten after the protect middleware has been run
 		
-		if(roles.indexOf(req.Staff.role) === -1){
+		if(roles.indexOf(req.staff.role) === -1){
 			
 			return next(new AppError('You Do Not Have Permission to Perform This Action', 403));
 		}
@@ -224,16 +223,16 @@ exports.restrictTo = (...roles) => {
 
 exports.forgotPassword = catchAsync(async(req, res, next) => {
 	// 1.) get Staff based on posted email
-	var Staff = await Staff.findOne({email:req.body.email});
-	if(!Staff){
+	var staff = await Staff.findOne({email:req.body.email});
+	if(!staff){
 		return next(new AppError('There is no Staff with email address', 404));
 	}
 
 
 	// 2.) generate random token
-	var resetToken = Staff.createOTP();
+	var resetToken = staff.createOTP();
 	//since we updated the passwordResetExpires field in our createOTP() function we now have to ensure it is saved into the db by using save() but sine there are some required fields as we are technically doing an update, we then use a special option in the save() which is validateBeforeSave and we set it to false
-	await Staff.save({validateBeforeSave: false});
+	await staff.save({validateBeforeSave: false});
 
 	// 3.) send it to Staff as email
 	//todo open mailtrap account
@@ -242,7 +241,7 @@ exports.forgotPassword = catchAsync(async(req, res, next) => {
 	
 	const message = `Forgot your Password? Use this OTP alongside your email and new password to change your password: ${resetToken}.\n  If You Did'nt Forget Your Password Please Ignore This Email`;
 	
-	emailComposer(Staff, message, "Your Password Reset Token (Valid For 10 Mins)", 'passwordReset');
+	emailComposer(staff, message, "Your Password Reset Token (Valid For 10 Mins)", 'passwordReset');
 	return res.status(200)
 	.json({
 		status: "success",
@@ -259,14 +258,14 @@ exports.verifyOTPClosure = (type) =>  catchAsync( async(req, res, next) => {
 	
 	const {email, password, OTP} = req.body;
   
-   const Staff = await Staff.findOne({email: email, otpExpires: {$gt:Date.now()}}).select('+password +emailValidateToken ');
+   const staff = await Staff.findOne({email: email, otpExpires: {$gt:Date.now()}}).select('+password +emailValidateToken ');
   
-   if(!Staff){
+   if(!staff){
 	return next(new AppError('Token is invalid or has Expired', 400));
 }
-   if(Staff.active === 'suspended' || Staff.active === 'takenDown') return next(new AppError("Your Account is Currently Not Allowed to Perform this Action", 500));
+   if(staff.active === 'suspended' || staff.active === 'takenDown') return next(new AppError("Your Account is Currently Not Allowed to Perform this Action", 500));
 
-   if(Staff.active === 'verified' && type ==='emailVerify') return res.status(200).json({
+   if(staff.active === 'verified' && type ==='emailVerify') return res.status(200).json({
 	  status: "success",
 	  message: "This Account Does Not Need to Verify it's Email"
   });
@@ -276,16 +275,16 @@ exports.verifyOTPClosure = (type) =>  catchAsync( async(req, res, next) => {
 
   
 	  if(type === 'emailVerify'){
-		if(!(await Staff.validatePassword(password, Staff.password))) return next(new AppError('Oops!!! Something Went Wrong 🤔🤔🤔 Wrong Input', 401));
+		if(!(await staff.validatePassword(password, staff.password))) return next(new AppError('Oops!!! Something Went Wrong 🤔🤔🤔 Wrong Input', 401));
 	  }
 		
 		
 	  
-		if(  !(Staff.validateOTP(OTP, Staff.otpToken, type))) return next(new AppError('Oops!!! Something Went Wrong 🤔🤔🤔 Wrong Input', 401));
+		if(  !(staff.validateOTP(OTP, staff.otpToken, type))) return next(new AppError('Oops!!! Something Went Wrong 🤔🤔🤔 Wrong Input', 401));
 		else {
 			if(type==='resetPassword'){
-				Staff.password = req.body.password;
-				Staff.passwordConfirm = req.body.passwordConfirm;
+				staff.password = req.body.password;
+				staff.passwordConfirm = req.body.passwordConfirm;
 			}
 			
 			
@@ -293,10 +292,10 @@ exports.verifyOTPClosure = (type) =>  catchAsync( async(req, res, next) => {
 		
 		// here notice we do not turn off validation cos we need it
 		
-		let optionalMessage=Staff.active;
-		let {token, nuRes} =  createAndSendToken(Staff, res );
-   		Staff.stoken = token;
-   		let newStaff  = await Staff.save({validateBeforeSave: false});
+		let optionalMessage=staff.active;
+		let {token, nuRes} =  createAndSendToken(staff, res );
+   		staff.stoken = token;
+   		let newStaff  = await staff.save({validateBeforeSave: false});
    
   		doTheNeedfulForLogin ({optionalMessage, statusCode:200, token, newStaff, nuRes});
 	  
@@ -320,12 +319,12 @@ exports.verifyOTPClosure = (type) =>  catchAsync( async(req, res, next) => {
 exports.updatePassword = catchAsync(async (req, res, next) => {
 	let verifiedStatus;
 	// 1.) get the current Staff
-	const Staff = await Staff.findById(req.Staff.id).select('+password');
+	const staff = await Staff.findById(req.Staff.id).select('+password');
 
 
 
 	// 2.) check if the current password is correct
-	if(!(await Staff.validatePassword(req.body.passwordCurrent, Staff.password))){
+	if(!(await staff.validatePassword(req.body.passwordCurrent, staff.password))){
 		return next(new AppError('Your Current Password is Wrong', 401));
 	}
 
@@ -335,14 +334,14 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
 
 	// 3.) if so, update password
-	Staff.password = req.body.password;
-	Staff.passwordConfirm = req.body.passwordConfirm;
-	verifiedStatus=Staff.active;
-	await Staff.save();
+	staff.password = req.body.password;
+	staff.passwordConfirm = req.body.passwordConfirm;
+	verifiedStatus=staff.active;
+	await staff.save();
 
 
 	// 4.) log Staff in
-	createAndSendToken(Staff, 200, res, verifiedStatus);
+	createAndSendToken(staff, 200, res, verifiedStatus);
 
 });
 

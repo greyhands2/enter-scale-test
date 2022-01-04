@@ -23,13 +23,13 @@ const StaffSchema = new mongoose.Schema({
 		unique:true,
 		sparse:true,
 		lowercase: true,
-		validate: [validator.isEmail, 'Please Specfy a Valid Email 😏']
+		validate: [validator.isEmail, 'Please Specify a Valid Email 😏']
 	},
 	
 	role: {
 		type: String,
-		enum: ['Staff', 'admin', 'creator'],
-		default: 'Staff'
+		enum: ['staff', 'admin'],
+		default: 'staff'
 
 	},
 	password: {
