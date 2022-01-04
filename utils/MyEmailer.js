@@ -5,8 +5,9 @@ const htmlToText = require('html-to-text');
 
 module.exports = class Email {
 	constructor(options){
-		this.to = options.user.email;
-		this.firstName = options.user.name.split(' ')[0];
+		this.to = options.staff.email;
+		if(!!options.staff.firstName) this.firstName=options.staff.firstName;
+		else this.firstName=options.staff.email.split("@")[0];
 		this.message = options.message;
 		this.subject = options.subject;
 		this.template = options.template;
@@ -21,7 +22,7 @@ module.exports = class Email {
 				host: process.env.EMAIL_HOST,
 				port: process.env.EMAIL_PORT,
 				auth: {
-					user: process.env.EMAIL_USERNAME,
+					staff: process.env.EMAIL_USERNAME,
 					pass:process.env.EMAIL_PASSWORD
 				}
 				//activate in gmail less secure apps
