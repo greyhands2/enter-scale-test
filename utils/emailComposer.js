@@ -32,7 +32,7 @@ async function doWork(job, done){
 
     try {
         //todo uncomment below commented code
-
+        console.log('proof redis works', job.data)
         await new Email(job.data.email).send();
 
         job.thata="finished";
