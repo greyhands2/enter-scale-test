@@ -11,6 +11,15 @@ exports.addClockIn=catchAsync(async(req,res,next)=>{
     let currentMonth= new Date(Date.now()).toLocaleString('default', { month: 'long' });
     console.log('i got here',currentMonth)
     console.log(req.staff.id)
+
+    const createAndRespond=async ()=>{
+         await ClockIn.create({staff:req.staff.id, count:1 });
+
+            return res.status(200).json({
+                status:"success",
+                message:"user clock in updated for the new month"
+            })
+    }
     await ClockIn.find({ staff: req.staff.id },async function(err, docs){
         console.log('d doc', docs)
         if(err) return next(new AppError("Something Went Wrong", 500));
@@ -47,14 +56,6 @@ exports.addClockIn=catchAsync(async(req,res,next)=>{
 
 
 
-    const createAndRespond=async ()=>{
-         await ClockIn.create({staff:req.staff.id, count:1 });
-
-            return res.status(200).json({
-                status:"success",
-                message:"user clock in updated for the new month"
-            })
-    }
 
 });
 
