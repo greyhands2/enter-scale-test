@@ -1,6 +1,6 @@
 const Queue = require('bull');
 const Email = require('./MyEmailer');
-const emailerQueuett = new Queue('emailerQueuett', process.env.REDIS_URL);
+const emailerQueuetty = new Queue('emailerQueuetty', process.env.REDIS_URL);
 
 
 
@@ -19,12 +19,12 @@ const emailComposer =  (staff, message, subject, template)=> {
 
 
 
-    emailerQueuett.add(data);
+    emailerQueuetty.add(data);
 
 }
 
 
-emailerQueuett.process(doWork);
+emailerQueuetty.process(doWork);
 
 
 
@@ -47,7 +47,7 @@ async function doWork(job, done){
 
 
 
-emailerQueuett.on('completed', function (job) {
+emailerQueuetty.on('completed', function (job) {
 
     if(job.thata==="restart") {
 
@@ -59,12 +59,12 @@ emailerQueuett.on('completed', function (job) {
 
 
           };
-          const redoemailerQueuett = new Queue('redoemailerQueuett', process.env.REDIS_URL);
-        redoemailerQueuett.add(job.data, jobOptions);
-        const initRetryQueue = () =>  redoemailerQueuett.process(doWork);
+          const redoemailerQueuetty = new Queue('redoemailerQueuetty', process.env.REDIS_URL);
+        redoemailerQueuetty.add(job.data, jobOptions);
+        const initRetryQueue = () =>  redoemailerQueuetty.process(doWork);
         initRetryQueue();
 
-redoemailerQueuett.on('completed',  async function (job) {
+redoemailerQueuetty.on('completed',  async function (job) {
 
     if(job.thata==="finished") {
 
@@ -72,9 +72,9 @@ redoemailerQueuett.on('completed',  async function (job) {
 
           
           
-          await redoemailerQueuett.removeRepeatable(job.name, { ...job.opts.repeat });
+          await redoemailerQueuetty.removeRepeatable(job.name, { ...job.opts.repeat });
 
-        //redoemailerQueuett.close();
+        //redoemailerQueuetty.close();
       }
     });
       }
