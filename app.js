@@ -47,7 +47,7 @@ app.use((req, res, next) => {
 });
 
 //allow only valid endpoints
-require('./validEndPoints').forEach((cur)=>{
+require('./validEndPoints.js').forEach((cur)=>{
 	app.use(`${globs}/${cur}`, require(`./${cur}/routes/${cur}Routes.js`));
 })
 
