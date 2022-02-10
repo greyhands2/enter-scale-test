@@ -1,0 +1,492 @@
+{
+	"info": {
+		"_postman_id": "f9dca2d2-10c3-4833-9d84-362be1ac45b2",
+		"name": "enter-scale-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "staffs",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"nike@outlook.com\",\n    \"password\":\"test1234\",\n    \"passwordConfirm\":\"test1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hoster}}{{domain}}{{staffEndpoint}}/register",
+							"host": [
+								"{{hoster}}{{domain}}{{staffEndpoint}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resendValidationEmail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"dashelli@outlook.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hoster}}{{domain}}{{staffEndpoint}}/resendValidationEmail",
+							"host": [
+								"{{hoster}}{{domain}}{{staffEndpoint}}"
+							],
+							"path": [
+								"resendValidationEmail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verifyEmail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n\n    \"email\":\"dashelli@outlook.com\",\n    \"password\":\"test1234\",\n    \"OTP\":\"677387\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hoster}}{{domain}}{{staffEndpoint}}/verifyEmail",
+							"host": [
+								"{{hoster}}{{domain}}{{staffEndpoint}}"
+							],
+							"path": [
+								"verifyEmail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"dashelli@outlook.com\",\n    \"password\":\"test1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hoster}}{{domain}}{{staffEndpoint}}/login",
+							"host": [
+								"{{hoster}}{{domain}}{{staffEndpoint}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgotPassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n\n    \"email\":\"dashelli@outlook.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hoster}}{{domain}}{{staffEndpoint}}/forgotPassword",
+							"host": [
+								"{{hoster}}{{domain}}{{staffEndpoint}}"
+							],
+							"path": [
+								"forgotPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resetPassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"dashelli@outlook.com\",\n    \"password\":\"test123\",\n    \"passwordConfirm\":\"test123\",\n    \"OTP\":\"440360\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hoster}}{{domain}}{{staffEndpoint}}/resetPassword",
+							"host": [
+								"{{hoster}}{{domain}}{{staffEndpoint}}"
+							],
+							"path": [
+								"resetPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateMyPassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"passwordCurrent\": \"test123\",\n\t\"password\": \"Nwabude2\",\n\t\"passwordConfirm\": \"Nwabude2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hoster}}{{domain}}{{staffEndpoint}}/updateMyPassword",
+							"host": [
+								"{{hoster}}{{domain}}{{staffEndpoint}}"
+							],
+							"path": [
+								"updateMyPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hoster}}{{domain}}{{staffEndpoint}}/me",
+							"host": [
+								"{{hoster}}{{domain}}{{staffEndpoint}}"
+							],
+							"path": [
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateMe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"lastName\":\"lawani\",\n    \"firstName\":\"sehhli\",\n    \"phone\":\"07062164273\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hoster}}{{domain}}{{staffEndpoint}}/updateMe",
+							"host": [
+								"{{hoster}}{{domain}}{{staffEndpoint}}"
+							],
+							"path": [
+								"updateMe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{hoster}}{{domain}}{{staffEndpoint}}/logout",
+							"host": [
+								"{{hoster}}{{domain}}{{staffEndpoint}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetchAllStaffs(Admin)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hoster}}{{domain}}{{staffEndpoint}}/",
+							"host": [
+								"{{hoster}}{{domain}}{{staffEndpoint}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetchStaff(Admin)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "editStaff(Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"active\":\"unverified\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hoster}}{{domain}}{{staffEndpoint}}/61d466d6257db80016ef4c03",
+							"host": [
+								"{{hoster}}{{domain}}{{staffEndpoint}}"
+							],
+							"path": [
+								"61d466d6257db80016ef4c03"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "clockIns",
+			"item": [
+				{
+					"name": "addClockIn",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{hoster}}{{domain}}{{clockInEndpoint}}/addClockIn",
+							"host": [
+								"{{hoster}}{{domain}}{{clockInEndpoint}}"
+							],
+							"path": [
+								"addClockIn"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStaffClockin(Admin)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hoster}}{{domain}}{{clockInEndpoint}}/getStaffClockin/61d49de8176b1c00164bb65d",
+							"host": [
+								"{{hoster}}{{domain}}{{clockInEndpoint}}"
+							],
+							"path": [
+								"getStaffClockin",
+								"61d49de8176b1c00164bb65d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getMyClockIns",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hoster}}{{domain}}{{clockInEndpoint}}/getMyClockIns",
+							"host": [
+								"{{hoster}}{{domain}}{{clockInEndpoint}}"
+							],
+							"path": [
+								"getMyClockIns"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllStaffsClockin(Admin)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hoster}}{{domain}}{{clockInEndpoint}}/getAllStaffsClockin",
+							"host": [
+								"{{hoster}}{{domain}}{{clockInEndpoint}}"
+							],
+							"path": [
+								"getAllStaffsClockin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{tokin}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "hoster",
+			"value": "https://enter-scale-test.herokuapp.com",
+			"type": "string"
+		},
+		{
+			"key": "domain",
+			"value": "/enter_scale_staff_api/level5",
+			"type": "string"
+		},
+		{
+			"key": "staffEndpoint",
+			"value": "/staffsService",
+			"type": "string"
+		},
+		{
+			"key": "jwt",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZDQ2NmQ2MjU3ZGI4MDAxNmVmNGMwMyIsImlhdCI6MTY0MTMxNzYyNSwiZXhwIjoxNjQzOTA5NjI1fQ.R43cBkWDddGfjCfBATd8xAXpoCwBfE_CxjdjF5bWA5A"
+		},
+		{
+			"key": "tokin",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZDQ5ZGU4MTc2YjFjMDAxNjRiYjY1ZCIsImlhdCI6MTY0MTMyNDAyNiwiZXhwIjoxNjQzOTE2MDI2fQ.OAM38P38NvhV05QWJOuywwvkaFfr2n-yakoiJUIRv70"
+		},
+		{
+			"key": "clockInEndpoint",
+			"value": "/clockInService",
+			"type": "string"
+		}
+	]
+}
