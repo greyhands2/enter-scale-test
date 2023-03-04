@@ -15,19 +15,11 @@ const signToken = (id) => {
 exports.createAndSendToken = (staff, res) => {
 	const token = signToken(staff._id);
 
-	const cookieOptions = {
-		// store expiring date in milliseconds
+	
 
-		maxAge: new Date(Date.now() + process.env.JWT_EXPIRE * 24 * 60 * 60 * 1000),
-		httpOnly: true
-	};
+	
 
-
-	if(process.env.NODE_ENV==='production') cookieOptions.secure=true;
-
-	res.cookie('jwt', token, cookieOptions);
-
-	//remove password from response object
+	
 
 	let nuRes = res;
 	
