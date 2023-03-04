@@ -18,7 +18,7 @@ exports.createAndSendToken = (staff, res) => {
 	const cookieOptions = {
 		// store expiring date in milliseconds
 
-		expires: new Date(Date.now() + process.env.JWT_EXPIRE * 24 * 60 * 60 * 1000),
+		maxAge: new Date(Date.now() + process.env.JWT_EXPIRE * 24 * 60 * 60 * 1000),
 		httpOnly: true
 	};
 
