@@ -47,14 +47,15 @@ app.use((req, res, next) => {
 });
 
 
-app.use('/', (req,res)=>{
-	res.send("Welcome to Staff Clockin API 😁😁😁")
-})
+
 //allow only valid endpoints
 require('./validEndPoints.js').forEach((cur)=>{
 	app.use(`${globs}/${cur}`, require(`./services/${cur}/routes/${cur}Routes.js`));
 })
 
+app.use('/', (req,res)=>{
+	res.send("Welcome to Staff Clockin API 😁😁😁")
+})
 
 app.all('*', (req, res, next) => {
 	
