@@ -54,17 +54,34 @@ exports.register = catchAsync( async (req, res, next) => {
 const OTP = newStaff.createOTP();
 console.log(OTP)
 
-await newStaff.save({validateBeforeSave: false});
+/********/
+//because of we dont have a free email service i have bypassed the sending otp and just done the validation here immediately after registering so this endpoint would return a token
+  newStaff.validateOTP(OTP, newStaff.otpToken, 'emailVerify')
+			
+		
+		// here notice we do not turn off validation cos we need it
+		
+		let optionalMessage=newStaff.active;
+		let {token, nuRes} =  createAndSendToken(newStaff, res );
+   		newStaff.stoken = token;
+   		
+   	await newStaff.save({validateBeforeSave: false});
+  		doTheNeedfulForLogin ({optionalMessage, statusCode:200, token, newStaff, nuRes});
+/********/
+
+
+
+
 //send OTP to Staff email
-const message = `You know how it goes 🤓, your OTP is: ${OTP}, input that on the verify email page and you're all set 🤝`;
+//const message = `You know how it goes 🤓, your OTP is: ${OTP}, input that on the verify email page and you're all set 🤝`;
 
- emailComposer(newStaff, message, "Would You Be So Kind as to Confirm Your Email",'welcome');
+ //emailComposer(newStaff, message, "Would You Be So Kind as to Confirm Your Email",'welcome');
 
- return res.status(201)
- .json({
-	 status: "success",
-	 message: "OTP Has Been Sent to You"
- });
+ // return res.status(201)
+ // .json({
+// 	 status: "success",
+// 	 message: "OTP Has Been Sent to You"
+ // });
 
 });
 

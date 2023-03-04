@@ -5,7 +5,7 @@ const htmlToText = require('html-to-text');
 
 module.exports = class Email {
 	constructor(options){
-		console.log("constructor ", options)
+		//console.log("constructor ", options)
 		this.to = options.staff.email;
 		if(!!options.staff.firstName){
 			this.firstName=options.staff.firstName;
