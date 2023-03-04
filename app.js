@@ -35,7 +35,7 @@ const limiter = rateLimit({
 	windowMs: 60 * 60 * 1000,
 	message: 'Too many requests from this IP, try again in an hour'
 })
-app.use('/enter_scale_staff_api', limiter);
+app.use('/staff_api', limiter);
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(compression());

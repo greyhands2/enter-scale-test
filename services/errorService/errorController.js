@@ -28,7 +28,7 @@ const handleCastErrorDB = err => {
   
   const sendErrorDev = (err, req, res) => {
 	// A) API
-	if (req.originalUrl.startsWith('/enter_scale_staff_api')) {
+	if (req.originalUrl.startsWith('/staff_api')) {
 	  return res.status(err.statusCode).json({
 		status: err.status,
 		error: err,
@@ -48,7 +48,7 @@ const handleCastErrorDB = err => {
   const sendErrorProd = (err, req, res) => {
 	// A) API
 	
-	if (req.originalUrl.startsWith('/enter_scale_staff_api')) {
+	if (req.originalUrl.startsWith('/staff_api')) {
 	  // A) Operational, trusted error: send message to client
 	  if (err.isOperationalError) {
 		return res.status(err.statusCode).json({
