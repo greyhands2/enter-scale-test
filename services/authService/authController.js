@@ -88,12 +88,12 @@ console.log(OTP)
  
 
 exports.logout = catchAsync(async(req, res, next)=>{
-	if(!req.body.token) return res.status(200).json({
+	if(!req.staff.stoken) return res.status(200).json({
 		status: "failure",
 		message:"Invalid Token"
 	});
 
-	await Staff.findOne({stoken: req.body.token, _id: req.staff.id}).then((data)=>{
+	await Staff.findOne({stoken: req.staff.stoken, _id: req.staff.id}).then((data)=>{
 		data.stoken=undefined;
 		data.save();
 		return res.status(200).json({
