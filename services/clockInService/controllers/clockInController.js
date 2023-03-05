@@ -65,22 +65,50 @@ exports.addClockIn=catchAsync(async(req,res,next)=>{
 exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
 
     let query = type === "admin" ? req.params.staffId : req.staff.id;
+    await ClockIn.aggregate([
+        {
+            $match: { staff: query }
+            
+        },
 
-    await ClockIn.find({staff:query}, async function(err, docs){
+        
 
-        if(err) return next(new AppError("Something Went Wrong", 500));
-
+        {
+            $lookup:{
+                from : 'Staff',
+                localField : 'staff',
+                foreignField : '_id',
+                as : 'staff'
+            }
+        },
+        {
+            $group: {
+                _id: "$month",
+                "id": 1,
+                "count": 1,
+                "staff.firstName": 1,
+                "staff.lastName": 1,
+                "staff.phone": 1,
+                "staff.email": 1,
+            }
+        },
+    ])
+    .then((docs) => {
         if(!docs || docs.length ===0) return next(new AppError("Staff Clock in not found found", 404));
-
-
-         return res.status(200).json({
-                status:"success",
-               data:docs
-            })
-
+        return res.status(200).json({
+            status:"success",
+           data:docs
+        })
     })
+    .catch((err) => {
+        return next(new AppError("Something Went Wrong", 500));
+    })
+
+    
 })
 
 
 
-exports.getAllStaffsClockin=factory.getAll(ClockIn);
+exports.getAllStaffsClockin = catchAsync(async(req, res, next) => {
+
+})
