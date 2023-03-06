@@ -4,7 +4,7 @@ const catchAsync = require('../../../utils/catchControllerAsyncs.js');
 const AppError = require('../../errorService/AppErrorModule.js');
 const factory=require('../../../utils/factoryHandlers.js')
 const ClockIn= require('../models/clockInModel.js')
-
+const mongoose = require('mongoose')
 
 exports.addClockIn=catchAsync(async(req,res,next)=>{
     
@@ -67,7 +67,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
     let query = type === "admin" ? req.params.staffId : req.staff.id;
     await ClockIn.aggregate([
         {
-            $match: { staff: query }
+            $match: { staff: mongoose.Types.ObjectId(query) }
             
         },
 
