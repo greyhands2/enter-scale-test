@@ -88,7 +88,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
         //         as : 'staffDetails'
         //     }
         // },
-         {$unwind: '$staffDetails'},
+         
          {
             $group: {
                 _id: "$month",
@@ -103,11 +103,11 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
                 _id: 0,
                 month: "$_id",
                 count: 1,
-                // "staffDetails._id": 1,
-                // "staffDetails.firstName": 1,
-                // "staffDetails.lastName": 1,
-                // "staffDetails.phone": 1,
-                // "staffDetails.email": 1
+                "staffDetails._id": 1,
+                "staffDetails.firstName": 1,
+                "staffDetails.lastName": 1,
+                "staffDetails.phone": 1,
+                "staffDetails.email": 1
             }
         }
         
