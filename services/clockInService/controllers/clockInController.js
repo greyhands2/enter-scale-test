@@ -81,18 +81,18 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
                 as : 'staffDetails'
             }
         },
-        {
-            $group: {
-                _id: "$month",
-                "id": {"$first": "$_id"},
-                "count": {"$first": "$count"},
-                "staff": {"$first": "$staff"},
-                "firstName": {"$first": "$staffDetails.firstName"},
-                "lastName": {"$first": "$staffDetails.lastName"},
-                "phone": {"$first": "$staffDetails.phone"},
-                "email": {"$first": "$staffDetails.email"},
-            }
-        }
+        // {
+        //     $group: {
+        //         _id: "$month",
+        //         "id": {"$first": "$_id"},
+        //         "count": {"$first": "$count"},
+        //         "staff": {"$first": "$staff"},
+        //         "firstName": {"$first": "$staffDetails.firstName"},
+        //         "lastName": {"$first": "$staffDetails.lastName"},
+        //         "phone": {"$first": "$staffDetails.phone"},
+        //         "email": {"$first": "$staffDetails.email"},
+        //     }
+        // }
     ])
     .then((docs) => {
         if(!docs || docs.length ===0) return next(new AppError("Staff Clock in not found found", 404));
