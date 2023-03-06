@@ -110,11 +110,20 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
     ])
     .then((docs) => {
         console.log('docs', docs)
-        if(!docs || docs.length ===0) return next(new AppError("Staff Clock in not found found", 404));
-        return res.status(200).json({
+        let returner, code;
+        if(!docs || docs.length ===0) [returner = {
+            status: "failure",
+            message:"Staff Clock in not found found"
+        }, code = 404];
+
+        
+       else [ returner = {
             status:"success",
            data:docs
-        })
+        }, code = 200 ]
+
+
+        return res.status(code).json(returner)
     })
     .catch((err) => {
         console.log('the errrrr', err)
