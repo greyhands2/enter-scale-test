@@ -80,14 +80,14 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
             }
         },
         {$unwind: '$staffDetails'},
-        {
-            $group: {
-                _id: "$month",
-                count: {$first: '$count'},
-                staff: {$first: '$staff'}
+        // {
+        //     $group: {
+        //         _id: "$month",
+        //         count: {$first: '$count'},
+        //         staff: {$first: '$staff'}
                 
-            }
-        },
+        //     }
+        // },
        
         {
             $project: {
