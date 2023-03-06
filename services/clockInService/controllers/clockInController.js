@@ -78,7 +78,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
                 from : 'Staff',
                 localField : 'staff',
                 foreignField : '_id',
-                as : 'staff'
+                as : 'staffDetails'
             }
         },
         {
@@ -86,10 +86,11 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
                 _id: "$month",
                 "id": {"$first": "$_id"},
                 "count": {"$first": "$count"},
-                "firstName": {"$first": "$staff.firstName"},
-                "lastName": {"$first": "$staff.lastName"},
-                "phone": {"$first": "$staff.phone"},
-                "email": {"$first": "$staff.email"},
+                "staff": {"$first": "$staff"},
+                "firstName": {"$first": "$staffDetails.firstName"},
+                "lastName": {"$first": "$staffDetails.lastName"},
+                "phone": {"$first": "$staffDetails.phone"},
+                "email": {"$first": "$staffDetails.email"},
             }
         }
     ])
