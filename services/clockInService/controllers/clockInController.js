@@ -81,6 +81,14 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
                 as : 'staffDetails'
             }
         },
+        {
+            $project: {
+                'staffDetails.firstName': 0,
+                'staffDetails.lastName': 0,
+                'staffDetails.email': 0,
+                'staffDetails.phone': 0
+            }
+        }
         // {
         //     $group: {
         //         _id: "$month",
