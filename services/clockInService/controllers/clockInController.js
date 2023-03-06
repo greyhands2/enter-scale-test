@@ -70,6 +70,15 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
             $match: { staff: mongoose.Types.ObjectId(query) }
             
         },
+
+        {
+            $lookup: {
+              from: 'Staff',
+              localField: 'staff',
+              foreignField: '_id',
+              as: 'staffDetails',
+            },
+          },
         
         // {
         //     $lookup:{
