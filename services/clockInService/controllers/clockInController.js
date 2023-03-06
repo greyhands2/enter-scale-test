@@ -74,20 +74,13 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
         {
             $lookup: {
               from: 'Staff',
-              localField: 'staff',
-              foreignField: '_id',
+              localField: 'staff.str',
+              foreignField: '_id.str',
               as: 'staffDetails',
             },
           },
         
-        // {
-        //     $lookup:{
-        //         from : 'Staff',
-        //         localField : 'staff',
-        //         foreignField : '_id',
-        //         as : 'staffDetails'
-        //     }
-        // },
+        
          
          {
             $group: {
