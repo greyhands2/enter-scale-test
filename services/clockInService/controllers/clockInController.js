@@ -91,16 +91,6 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
                 "phone": {"$first": "$staff.phone"},
                 "email": {"$first": "$staff.email"},
             }
-        },
-        {
-            $project: {
-                "_id": 1,
-                "count": 1,
-                "staff.firstName": 1,
-                "staff.lastName": 1,
-                "staff.phone": 1,
-                "staff.email": 1,
-            }
         }
     ])
     .then((docs) => {
