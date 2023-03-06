@@ -84,14 +84,19 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
         {
             $group: {
                 _id: "$month",
-                // "_id": 1,
-                // "count": 1,
-                // "staff.firstName": 1,
-                // "staff.lastName": 1,
-                // "staff.phone": 1,
-                // "staff.email": 1,
+                
             }
         },
+        {
+            $project: {
+                "_id": 1,
+                "count": 1,
+                "staff.firstName": 1,
+                "staff.lastName": 1,
+                "staff.phone": 1,
+                "staff.email": 1,
+            }
+        }
     ])
     .then((docs) => {
         if(!docs || docs.length ===0) return next(new AppError("Staff Clock in not found found", 404));
