@@ -66,7 +66,16 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
 
     let query = type === "admin" ? req.params.staffId : req.staff.id;
     await ClockIn.aggregate([
-
+        {
+            $match: { staff: mongoose.Types.ObjectId(query) }
+            
+        },
+        {
+            $group: {
+                _id: "$month"
+                
+            }
+        },
         {
             $lookup:{
                 from : 'Staff',
@@ -75,26 +84,24 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
                 as : 'staffDetails'
             }
         },
-        // {
-        //     $match: { staff: mongoose.Types.ObjectId(query) }
-            
-        // },
+        {
+            $project: {
+                "_id": 0,
+                "month": "$_id",
+                "count": "$count",
+                "staff": "$staff",
+                "firstName": "$staffDetails.firstName",
+                "lastName": "$staffDetails.lastName",
+                "phone": "$staffDetails.phone",
+                "email": "$staffDetails.email",
+            }
+        }
+        
 
         
 
        
-        // {
-        //     $group: {
-        //         _id: "$month",
-        //         "id": {"$first": "$_id"},
-        //         "count": {"$first": "$count"},
-        //         "staff": {"$first": "$staff"},
-        //         "firstName": {"$first": "$staffDetails.firstName"},
-        //         "lastName": {"$first": "$staffDetails.lastName"},
-        //         "phone": {"$first": "$staffDetails.phone"},
-        //         "email": {"$first": "$staffDetails.email"},
-        //     }
-        // }
+       
     ])
     .then((docs) => {
         if(!docs || docs.length ===0) return next(new AppError("Staff Clock in not found found", 404));
