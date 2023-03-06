@@ -66,6 +66,17 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
 
     let query = type === "admin" ? req.params.staffId : req.staff.id;
     await ClockIn.aggregate([
+       
+        {
+            $lookup:{
+                from : 'Staff',
+                localField : 'staff',
+                foreignField : '_id',
+                as : 'staffDetails'
+            }
+        },
+        { $unwind: "$staffDetails" },
+        
         {
             $match: { staff: mongoose.Types.ObjectId(query) }
             
@@ -77,15 +88,6 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
             }
         },
         {
-            $lookup:{
-                from : 'Staff',
-                localField : 'staff',
-                foreignField : '_id',
-                as : 'staffDetails'
-            }
-        },
-        { $unwind: "$staffDetails" },
-        {
             $project: {
                 _id: 0,
                 month: "$_id",
@@ -96,7 +98,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
                 phone: "$staffDetails.phone",
                 email: "$staffDetails.email",
             }
-        }
+        },
         
 
         
