@@ -84,16 +84,17 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
                 as : 'staffDetails'
             }
         },
+        { $unwind: "$staffDetails" },
         {
             $project: {
-                "_id": 0,
-                "month": "$_id",
-                "count": "$count",
-                "staff": "$staff",
-                "firstName": "$staffDetails.firstName",
-                "lastName": "$staffDetails.lastName",
-                "phone": "$staffDetails.phone",
-                "email": "$staffDetails.email",
+                _id: 0,
+                month: "$_id",
+                count: 1,
+                staff: 1,
+                firstName: "$staffDetails.firstName",
+                lastName: "$staffDetails.lastName",
+                phone: "$staffDetails.phone",
+                email: "$staffDetails.email",
             }
         }
         
