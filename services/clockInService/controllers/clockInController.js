@@ -70,12 +70,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
             $match: { staff: mongoose.Types.ObjectId(query) }
             
         },
-        {
-            $group: {
-                _id: "$month"
-                
-            }
-        },
+        
         {
             $lookup:{
                 from : 'Staff',
@@ -84,19 +79,25 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
                 as : 'staffDetails'
             }
         },
-        // { $unwind: "$staffDetails" },
-        // {
-        //     $project: {
-        //         _id: 0,
-        //         month: "$_id",
-        //         count: 1,
-        //         staff: 1,
-        //         firstName: "$staffDetails.firstName",
-        //         lastName: "$staffDetails.lastName",
-        //         phone: "$staffDetails.phone",
-        //         email: "$staffDetails.email",
-        //     }
-        // }
+        {
+            $group: {
+                _id: "$month"
+                
+            }
+        },
+        { $unwind: "$staffDetails" },
+        {
+            $project: {
+                _id: 0,
+                month: "$_id",
+                count: 1,
+                staff: 1,
+                firstName: "$staffDetails.firstName",
+                lastName: "$staffDetails.lastName",
+                phone: "$staffDetails.phone",
+                email: "$staffDetails.email",
+            }
+        }
         
 
         
