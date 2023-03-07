@@ -78,7 +78,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
           as: 'staffDetails',
         },
       }
-
+      let unwind = { $unwind: '$staffDetails'}
      let group =  {
         $group: {
             _id: "$month",
@@ -89,7 +89,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
             
         }
     }
-
+    
     let project = {
         $project: {
             _id: 0,
@@ -97,14 +97,14 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
             count: 1,
             staff:1,
             email:1,
-            'staffDetails.firstName': 1,
-            'staffDetails.lastName': 1,
-            'staffDetails.phone': 1
             
+            "firstName": "$staffDetails.firstName",
+            "lastName": "$staffDetails.lastName",
+            "phone":"$staffDetails.phone"
         }
     }
 
-    let stages = [match, lookup, group, project]
+    let stages = [match, lookup, unwind, group, project]
     
     
     await ClockIn.aggregate(stages).then((docs) => {
