@@ -70,7 +70,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
             $match: { staff: mongoose.Types.ObjectId(query) }
             
         },
-        {$addFields: {staff: {$toObjectId: "$staff"} }},
+        
         {
             $lookup: {
               from: 'Staff',
