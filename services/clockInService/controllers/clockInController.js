@@ -13,7 +13,7 @@ exports.addClockIn=catchAsync(async(req,res,next)=>{
     console.log(req.staff.id)
 
     const createAndRespond=async ()=>{
-         await ClockIn.create({staff:req.staff.id, count:1 });
+         await ClockIn.create({staff:req.staff.id, count:1, email: req.staff.email });
 
             return res.status(200).json({
                 status:"success",
