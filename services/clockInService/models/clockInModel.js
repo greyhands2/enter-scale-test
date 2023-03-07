@@ -11,7 +11,7 @@ const ClockInSchema = new mongoose.Schema({
         type:String,
         default: new Date(Date.now()).toLocaleString('default', { month: 'long' })
     },
-
+	email: String,
 	staff:{
         type: mongoose.Schema.ObjectId,
         ref: 'Staff',
