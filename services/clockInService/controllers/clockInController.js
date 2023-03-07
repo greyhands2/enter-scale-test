@@ -104,9 +104,9 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
     }
 
     let stages = [match, lookup, group, project]
-    let pipeline= await ClockIn.aggregate(stages);
     
-    pipeline.then((docs) => {
+    
+    await ClockIn.aggregate(stages).then((docs) => {
         console.log('docs', docs)
         let returner, code;
         if(!docs || docs.length ===0) [returner = {
