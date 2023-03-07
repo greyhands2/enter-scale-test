@@ -65,54 +65,48 @@ exports.addClockIn=catchAsync(async(req,res,next)=>{
 exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
 
     let query = type === "admin" ? req.params.staffId : req.staff.id;
-    await ClockIn.aggregate([
-        {
-            $match: { staff: mongoose.Types.ObjectId(query) }
+    let match = {
+        $match: { staff: mongoose.Types.ObjectId(query) }
+        
+    }
+
+    let lookup = {
+        $lookup: {
+          from: 'Staff',
+          localField: 'email',
+          foreignField: 'email',
+          as: 'staffDetails',
+        },
+      }
+
+     let group =  {
+        $group: {
+            _id: "$month",
+            count: {$first: '$count'},
+            staff: {$first: '$staff'},
+            staffDetails: {$first: '$staffDetails'}
             
-        },
-        
-        {
-            $lookup: {
-              from: 'Staff',
-              localField: 'email',
-              foreignField: 'email',
-              as: 'staffDetails',
-            },
-          },
-        
-        
-         
-         {
-            $group: {
-                _id: "$month",
-                count: {$first: '$count'},
-                staff: {$first: '$staff'},
-                staffDetails: {$first: '$staffDetails'}
-                
-            }
-        },
-       
-        {
-            $project: {
-                _id: 0,
-                month: "$_id",
-                count: 1,
-                staff:1,
-                
-                "firstName": "$staffDetails.firstName",
-                "lastName": "$staffDetails.lastName",
-                "phone":"$staffDetails.phone",
-                "email":"$staffDetails.email"
-            }
         }
-        
+    }
 
-        
+    let project = {
+        $project: {
+            _id: 0,
+            month: "$_id",
+            count: 1,
+            staff:1,
+            
+            "firstName": "$staffDetails.firstName",
+            "lastName": "$staffDetails.lastName",
+            "phone":"$staffDetails.phone",
+            "email":"$staffDetails.email"
+        }
+    }
 
-       
-       
-    ])
-    .then((docs) => {
+    let stages = [match, lookup, group, project]
+    let pipeline= await ClockIn.aggregate(stages);
+    
+    pipeline.then((docs) => {
         console.log('docs', docs)
         let returner, code;
         if(!docs || docs.length ===0) [returner = {
