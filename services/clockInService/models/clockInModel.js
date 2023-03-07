@@ -11,7 +11,15 @@ const ClockInSchema = new mongoose.Schema({
         type:String,
         default: new Date(Date.now()).toLocaleString('default', { month: 'long' })
     },
-	email: String,
+	email: {
+		type: String,
+		required: [true, 'Please Specify an Email 🙄'],
+		index:true, 
+		unique:true,
+		sparse:true,
+		lowercase: true,
+		validate: [validator.isEmail, 'Please Specify a Valid Email 😏']
+	},
 	staff:{
         type: mongoose.Schema.ObjectId,
         ref: 'Staff',
