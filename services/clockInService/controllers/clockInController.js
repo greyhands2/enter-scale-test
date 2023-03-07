@@ -125,7 +125,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
         return res.status(code).json(returner)
     })
     .catch((err) => {
-        console.log('the errrrr', err)
+        console.log('the err', err)
         return next(new AppError("Something Went Wrong", 500));
     })
 
