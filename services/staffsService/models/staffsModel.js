@@ -82,16 +82,16 @@ const StaffSchema = new mongoose.Schema({
 // use a mongoose middleware to hash passwords
 // remember since we wanna hash the passwords before it is saved it is only mongoose document middleware that is suitable here, the "pre" variation of course
 
-StaffSchema.virtual('clockIns', {
+// StaffSchema.virtual('clockIns', {
 
-	ref: 'ClockIn',
-	// the foreign field is the name of the relating field in the schema we wanna relate our tourSchema to
-	foreignField: 'Staff',
-	// and locally in tourSchema it is with _id that tourSchema can be referenced in the review model
-	localField: '_id'
+// 	ref: 'ClockIn',
+// 	// the foreign field is the name of the relating field in the schema we wanna relate our tourSchema to
+// 	foreignField: 'Staff',
+// 	// and locally in tourSchema it is with _id that tourSchema can be referenced in the review model
+// 	localField: '_id'
 	
 
-});
+// });
 
 
 
