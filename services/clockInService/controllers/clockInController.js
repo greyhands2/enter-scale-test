@@ -97,9 +97,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
             count: 1,
             staff:1,
             email:1,
-            'staffDetails.firstName': 1,
-            'staffDetails.lastName': 1,
-            'staffDetails.phone': 1
+            staffDetails: 1
         }
     }
 
