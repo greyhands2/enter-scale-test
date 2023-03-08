@@ -84,7 +84,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
             _id: "$month",
             count: {$first: '$count'},
             staff: {$first: '$staff'},
-            email: {$first: '$email'},
+            
             staffDetails: {$first: '$staffDetails'}
             
                 
@@ -97,8 +97,8 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
             month: "$_id",
             count: 1,
             staff:1,
-            email:1,
-            staffDetails: 1
+            
+            email: 'staffDetails.email'
             
         }
     }
