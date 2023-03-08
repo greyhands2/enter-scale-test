@@ -86,8 +86,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
             staff: {$first: '$staff'},
             email: {$first: '$email'},
             staffDetails: {$first: '$staffDetails'}
-            
-            
+                
         }
     }
     
@@ -117,7 +116,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
         let returner, code;
         if(!docs || docs.length ===0) [returner = {
             status: "failure",
-            message:"Staff Clock in not found found"
+            message:"Staff Clock in not found"
         }, code = 404];
 
         
