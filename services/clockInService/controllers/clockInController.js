@@ -85,7 +85,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
             count: {$first: '$count'},
             staff: {$first: '$staff'},
             email: {$first: '$email'},
-            staffDetails: {$first: '$staffDetails.firstName'}
+            staffDetails: {$first: '$staffDetails'}
             
             
         }
@@ -98,7 +98,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
             count: 1,
             staff:1,
             email:1,
-            
+            'staffDetails.firstName': 1
             
         }
     }
@@ -108,7 +108,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
         lookup,
         unwind,
         group, 
-        //project
+        project
     ];
     
     
