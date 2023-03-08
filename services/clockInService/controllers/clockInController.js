@@ -72,7 +72,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
 
     let lookup = {
         $lookup: {
-          from: 'staff',
+          from: 'staffs',
           localField: 'email',
           foreignField: 'email',
           as: 'staffDetails',
