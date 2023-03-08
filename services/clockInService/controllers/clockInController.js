@@ -79,19 +79,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
         },
       }
       let unwind = { $unwind: '$staffDetails'}
-     let group =  {
-        $group: {
-            _id: "$month",
-            count: {$first: '$count'},
-            staff: {$first: '$staff'},
-            email: {$first: '$email'}
-           
-            
-            
-        }
-    }
-    
-    let project = {
+      let project = {
         $project: {
             _id: 0,
             month: "$_id",
@@ -104,12 +92,31 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
         }
     }
 
+    // { $group: { _id: '$month', data: { $push: { email: '$email', clockinNumber: '$clockinNumber', firstName: '$firstName', lastName: '$lastName' } } } }
+     let group =  {
+        $group: {
+            _id: "$month",
+            count:  '$count',
+            staff:  '$staff',
+            email:  '$email',
+            firstName: '$firstName',
+            lastName: '$lastName',
+            phone: '$phone'
+           
+            
+            
+        }
+    }
+    
+    
+
     let stages = [
         match, 
         lookup,
         unwind,
-        group, 
-        project
+         
+        project,
+        group
     ];
     
     
