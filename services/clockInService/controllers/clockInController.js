@@ -108,7 +108,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
         lookup,
         unwind,
         group, 
-        project
+        //project
     ];
     
     
