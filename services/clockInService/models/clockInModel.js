@@ -14,9 +14,7 @@ const ClockInSchema = new mongoose.Schema({
 	email: {
 		type: String,
 		required: [true, 'Please Specify an Email 🙄'],
-		index:true, 
-		unique:true,
-		sparse:true,
+		
 		lowercase: true,
 		validate: [validator.isEmail, 'Please Specify a Valid Email 😏']
 	},
