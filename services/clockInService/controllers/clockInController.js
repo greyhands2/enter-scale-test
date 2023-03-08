@@ -78,7 +78,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
           as: 'staffDetails',
         },
       }
-      //let unwind = { $unwind: '$staffDetails'}
+      let unwind = { $unwind: '$staffDetails'}
      let group =  {
         $group: {
             _id: "$month",
@@ -107,7 +107,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
     let stages = [
         match, 
         lookup,
-        
+        unwind,
         group, 
         //project
     ];
