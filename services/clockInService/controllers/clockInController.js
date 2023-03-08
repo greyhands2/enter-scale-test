@@ -104,7 +104,13 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
         }
     }
 
-    let stages = [match, lookup, unwind, group, project]
+    let stages = [
+        //match, 
+        lookup
+       // unwind, 
+        //group, 
+        //project
+    ];
     
     
     await ClockIn.aggregate(stages).then((docs) => {
