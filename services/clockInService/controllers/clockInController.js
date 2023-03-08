@@ -83,7 +83,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
         $project: {
             _id: 0,
             month: "$_id",
-            count: 1,
+            //count: 1,
             staff:1,
             email:1,
             firstName: '$staffDetails.firstName',
@@ -96,7 +96,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
      let group =  {
         $group: {
             _id: "$month",
-            count:  '$count',
+           // count:  '$count',
             staff:  '$staff',
             email:  '$email',
             firstName: '$firstName',
