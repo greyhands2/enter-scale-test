@@ -145,5 +145,74 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
 
 
 exports.getAllStaffsClockin = catchAsync(async(req, res, next) => {
+    
 
+    let lookup = {
+        $lookup: {
+          from: 'staffs',
+          localField: 'staff',
+          foreignField: '_id',
+          as: 'staffDetails',
+        },
+      }
+      let unwind = { $unwind: '$staffDetails'}
+     let group =  {
+        $group: {
+            _id: "$month",
+            count: {$first: '$count'},
+            staff: {$first: '$staff'},
+            
+            staffDetails: {$first: '$staffDetails'}
+            
+                
+        }
+    }
+    
+    let project = {
+        $project: {
+            _id: 0,
+            month: "$_id",
+            data: {
+                count: '$count',
+                staff:'$staff',
+                firstName: '$staffDetails.firstName',
+                lastName: '$staffDetails.lastName',
+                email: '$staffDetails.email',
+                phone: '$staffDetails.phone'
+            }
+            
+            
+        }
+    }
+
+    let stages = [
+         
+        lookup,
+        unwind,
+        group, 
+        project
+    ];
+    
+    
+    await ClockIn.aggregate(stages).then((docs) => {
+        console.log('docs', docs)
+        let returner, code;
+        if(!docs || docs.length ===0) [returner = {
+            status: "failure",
+            message:"Staffs Clock ins not found"
+        }, code = 404];
+
+        
+       else [ returner = {
+            status:"success",
+           data:docs
+        }, code = 200 ]
+
+
+        return res.status(code).json(returner)
+    })
+    .catch((err) => {
+        console.log('the err', err)
+        return next(new AppError("Something Went Wrong", 500));
+    })
 })
