@@ -79,13 +79,33 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
         },
       }
       let unwind = { $unwind: '$staffDetails'}
+      let project1 = {
+        $project: {
+            month:1,
+            count:1,
+            staff: 1,
+            'staffDetails.firstName': 1,
+            'staffDetails.lastName': 1,
+            'staffDetails.email': 1,
+            'staffDetails.phone': 1,
+        }
+      }
      let group =  {
         $group: {
             _id: "$month",
-            count: {$first: '$count'},
-            staff: {$first: '$staff'},
+            data: {
+                $push: {
+                    count: '$count',
+                    staff: '$staff',
+                    firstName: '$staffDetails.firstName',
+                    lastName: '$staffDetails.lastName',
+                    email: '$staffDetails.email',
+                    phone: '$staffDetails.phone'
+                }
+            }
             
-            staffDetails: {$first: '$staffDetails'}
+            
+            
             
                 
         }
@@ -95,14 +115,7 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
         $project: {
             _id: 0,
             month: "$_id",
-            data: {
-                count: '$count',
-                staff:'$staff',
-                firstName: '$staffDetails.firstName',
-                lastName: '$staffDetails.lastName',
-                email: '$staffDetails.email',
-                phone: '$staffDetails.phone'
-            }
+            data: 1
             
             
         }
@@ -162,10 +175,11 @@ exports.getAllStaffsClockin = catchAsync(async(req, res, next) => {
       $project: {
           month: 1,
           count: 1,
+          staff:1,
           'staffDetails.firstName': 1,
           'staffDetails.lastName': 1,
-          'staffDetails.email': 1,
-          'staffDetails._id': 1
+          'staffDetails.email': 1
+          
         }
       }
      let group =  {
@@ -174,7 +188,7 @@ exports.getAllStaffsClockin = catchAsync(async(req, res, next) => {
         _id: '$month',
         data: {
           $push: {
-            staff: '$staffDetails._id',
+            staff: '$staff',
             firstName: '$staffDetails.firstName',
             lastName: '$staffDetails.lastName',
             email: '$staffDetails.email',
