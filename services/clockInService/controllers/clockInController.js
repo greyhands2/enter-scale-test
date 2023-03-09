@@ -83,12 +83,12 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
         $group: {
             _id: "$month",
             data: {
-               $addElement: {
+               
                 count: {$first: '$count'},
                 staff: {$first: '$staff'},
                 
                 staffDetails: {$first: '$staffDetails'}
-               } 
+               
             }
             
             
