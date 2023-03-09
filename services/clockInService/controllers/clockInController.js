@@ -156,31 +156,40 @@ exports.getAllStaffsClockin = catchAsync(async(req, res, next) => {
         },
       }
       let unwind = { $unwind: '$staffDetails'}
-     let group =  {
-        $group: {
-            _id: '$month',
-            
-            data: { $push: '$$ROOT' }
-                
-            
-            
-            
-                
+
+
+      let project1 = {
+      $project: {
+          month: 1,
+          count: 1,
+          'staffDetails.firstName': 1,
+          'staffDetails.lastName': 1,
+          'staffDetails.email': 1,
+          'staffDetails._id': 1
         }
+      }
+     let group =  {
+     
+     $group: {
+        _id: '$month',
+        data: {
+          $push: {
+            staff: '$staffDetails._id',
+            firstName: '$staffDetails.firstName',
+            lastName: '$staffDetails.lastName',
+            email: '$staffDetails.email',
+            count: '$count'
+          }
+        }
+      }
     }
     
-    let project = {
+    
+    let project2 = {
         $project: {
             _id: 0,
             month: '$_id',
-            
-            data: {
-                firstName: 1,
-                lastName:  1,
-                email:     1,
-                count:     1,
-                staff:     1,
-            }
+            data: 1
             
             
             
@@ -191,8 +200,9 @@ exports.getAllStaffsClockin = catchAsync(async(req, res, next) => {
          
         lookup,
         unwind,
+        project1,
         group, 
-        project
+        project2
     ];
     
     
