@@ -175,11 +175,11 @@ exports.getAllStaffsClockin = catchAsync(async(req, res, next) => {
             month: '$_id',
             
             data: {
-                firstName: '$staffDetails.firstName',
-                lastName:  '$staffDetails.lastName',
-                email:     '$staffDetails.email',
-                count:     '$count',
-                staff:     '$staff',
+                firstName: 1,
+                lastName:  1,
+                email:     1,
+                count:     1,
+                staff:     1,
             }
             
             
