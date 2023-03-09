@@ -158,11 +158,16 @@ exports.getAllStaffsClockin = catchAsync(async(req, res, next) => {
       let unwind = { $unwind: '$staffDetails'}
      let group =  {
         $group: {
-            _id: "$month",
-            count: {$addToSet: '$count'},
-            staff: {$addToSet: '$staff'},
+            data: {
+                $addToSet: {
+                    _id: '$month',
+                    count: '$count',
+                    staff: '$staff',
             
-            staffDetails:  {$addToSet: '$staffDetails'}
+                    staffDetails: '$staffDetails'
+                }
+            }
+            
             
                 
         }
