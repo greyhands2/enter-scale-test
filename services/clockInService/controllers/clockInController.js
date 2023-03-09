@@ -13,7 +13,7 @@ exports.addClockIn=catchAsync(async(req,res,next)=>{
     console.log(req.staff.id)
 
     const createAndRespond=async ()=>{
-         await ClockIn.create({staff:req.staff.id, count:1, email: req.staff.email });
+         await ClockIn.create({staff:req.staff.id, count:1});
 
             return res.status(200).json({
                 status:"success",
@@ -73,8 +73,8 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
     let lookup = {
         $lookup: {
           from: 'staffs',
-          localField: 'email',
-          foreignField: 'email',
+          localField: 'staff',
+          foreignField: '_id',
           as: 'staffDetails',
         },
       }
@@ -95,10 +95,15 @@ exports.getStaffClockin=(type)=>catchAsync(async(req,res,next)=>{
         $project: {
             _id: 0,
             month: "$_id",
-            count: 1,
-            staff:1,
+            data: {
+                count: 1,
+                staff:1,
+                firstName: '$staffDetails.firstName',
+                lastName: '$staffDetails.lastName',
+                email: '$staffDetails.email',
+                phone: '$staffDetails.phone'
+            }
             
-            email: '$staffDetails.email'
             
         }
     }
