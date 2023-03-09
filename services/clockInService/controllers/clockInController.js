@@ -164,7 +164,11 @@ exports.getAllStaffsClockin = catchAsync(async(req, res, next) => {
                     count: '$count',
                     staff: '$staff',
             
-                    staffDetails: '$staffDetails'
+                    
+                    firstName: '$staffDetails.firstName',
+                    lastName: '$staffDetails.lastName',
+                    email: '$staffDetails.lastName.email',
+                    phone: '$staffDetails.phone'
                 }
             }
             
@@ -177,14 +181,14 @@ exports.getAllStaffsClockin = catchAsync(async(req, res, next) => {
         $project: {
             _id: 0,
             month: "$_id",
-            data: {
-                count: '$count',
-                staff:'$staff',
-                firstName: '$staffDetails.firstName',
-                lastName: '$staffDetails.lastName',
-                email: '$staffDetails.email',
-                phone: '$staffDetails.phone'
-            }
+            
+                count: 1,
+                staff:1,
+                firstName: 1,
+                lastName: 1,
+                email: 1,
+                phone: 1
+            
             
             
         }
