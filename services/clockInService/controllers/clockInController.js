@@ -158,11 +158,13 @@ exports.getAllStaffsClockin = catchAsync(async(req, res, next) => {
       let unwind = { $unwind: '$staffDetails'}
      let group =  {
         $group: {
-            _id: "$month",
-            count: {$first: '$count'},
-            staff: {$first: '$staff'},
-            
-            staffDetails: {$first: '$staffDetails'}
+            _id: '$month',
+            firstName: { $first: '$staffDetails.firstName' },
+            lastName: { $first: '$staffDetails.lastName' },
+            email: { $first: '$staffDetails.email' },
+            count: { $first: '$count' },
+            staff: { $first: '$staff' },
+            data: { $push: '$$ROOT' }
                 
             
             
@@ -174,15 +176,13 @@ exports.getAllStaffsClockin = catchAsync(async(req, res, next) => {
     let project = {
         $project: {
             _id: 0,
-            month: "$_id",
-            data: {
-                count: '$count',
-                staff:'$staff',
-                firstName: '$staffDetails.firstName',
-                lastName: '$staffDetails.lastName',
-                email: '$staffDetails.email',
-                phone: '$staffDetails.phone'
-            }
+            month: '$_id',
+            firstName: 1,
+            lastName: 1,
+            email: 1,
+            clocking: 1,
+            staffID: 1,
+            data: 1
             
             
             
