@@ -177,11 +177,7 @@ exports.getAllStaffsClockin = catchAsync(async(req, res, next) => {
         $project: {
             _id: 0,
             month: '$_id',
-            firstName: 1,
-            lastName: 1,
-            email: 1,
-            clocking: 1,
-            staffID: 1,
+            
             data: 1
             
             
@@ -220,3 +216,88 @@ exports.getAllStaffsClockin = catchAsync(async(req, res, next) => {
         return next(new AppError("Something Went Wrong", 500));
     })
 })
+
+
+
+data= [
+    {
+        "firstName": null,
+        "lastName": null,
+        "email": "esther@outlook.com",
+        "data": [
+            {
+                "_id": "64099a20eb59580035a5bc28",
+                "month": "March",
+                "createdAt": "2023-03-09T08:33:21.829Z",
+                "staff": "6404cd885d15440034e74ff7",
+                "count": 1,
+                "__v": 0,
+                "staffDetails": {
+                    "_id": "6404cd885d15440034e74ff7",
+                    "role": "staff",
+                    "active": "verified",
+                    "createdAt": "2023-03-05T17:10:18.341Z",
+                    "email": "esther@outlook.com",
+                    "password": "$2a$12$5MyaiQpsKhMbiG21jAwHtehg6H1hnaLUvCKywAmY35o72FjahUy5W",
+                    "__v": 0,
+                    "stoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDRjZDg4NWQxNTQ0MDAzNGU3NGZmNyIsImlhdCI6MTY3ODE5NjcxNiwiZXhwIjoxNjgwNzg4NzE2fQ.N_T67lIFnuGEFPYbcrzjdbU1rxisZ4UDP7KRiYiwe8g"
+                }
+            },
+            {
+                "_id": "64099a51eb59580035a5bc2f",
+                "month": "March",
+                "createdAt": "2023-03-09T08:33:21.829Z",
+                "staff": "6404cd3e5d15440034e74ff4",
+                "count": 1,
+                "__v": 0,
+                "staffDetails": {
+                    "_id": "6404cd3e5d15440034e74ff4",
+                    "role": "staff",
+                    "active": "verified",
+                    "createdAt": "2023-03-05T17:10:18.341Z",
+                    "email": "simi@outlook.com",
+                    "password": "$2a$12$dkUFb8DNQmmttqm7QyFdT.A1kGoy.lTBZ7wLwxLza8ylqxC6Joyja",
+                    "__v": 0,
+                    "stoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDRjZDNlNWQxNTQ0MDAzNGU3NGZmNCIsImlhdCI6MTY3ODM1MDkxMSwiZXhwIjoxNjgwOTQyOTExfQ.tPeX7uYM2p5zE7j77azvLm9PuxX2IeRBdOsaDoYpUDc"
+                }
+            },
+            {
+                "_id": "64099a70eb59580035a5bc36",
+                "month": "March",
+                "createdAt": "2023-03-09T08:33:21.829Z",
+                "staff": "6404cd325d15440034e74ff1",
+                "count": 1,
+                "__v": 0,
+                "staffDetails": {
+                    "_id": "6404cd325d15440034e74ff1",
+                    "role": "staff",
+                    "active": "verified",
+                    "createdAt": "2023-03-05T17:10:18.341Z",
+                    "email": "toluwa@outlook.com",
+                    "password": "$2a$12$1uGsKstpV1OoA63.X2rj/usw3AGURS0wfZrJzLMsbCal2QUyiw/ue",
+                    "__v": 0,
+                    "stoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDRjZDMyNWQxNTQ0MDAzNGU3NGZmMSIsImlhdCI6MTY3ODM1MDk0NywiZXhwIjoxNjgwOTQyOTQ3fQ.jBNhyeXF5XOqsCYg3QtvaB-nhSdQqKmbXxmizvjrjlY"
+                }
+            },
+            {
+                "_id": "64099a8ceb59580035a5bc3d",
+                "month": "March",
+                "createdAt": "2023-03-09T08:33:21.829Z",
+                "staff": "6404cd0e5d15440034e74fee",
+                "count": 1,
+                "__v": 0,
+                "staffDetails": {
+                    "_id": "6404cd0e5d15440034e74fee",
+                    "role": "staff",
+                    "active": "verified",
+                    "createdAt": "2023-03-05T17:10:18.341Z",
+                    "email": "osas@outlook.com",
+                    "password": "$2a$12$pQnnTiiH.btorHgz3mWGRuZ0YO./hLwoWa7dNen9UpcXewCWrTBi2",
+                    "__v": 0,
+                    "stoken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MDRjZDBlNWQxNTQ0MDAzNGU3NGZlZSIsImlhdCI6MTY3ODM1MDk3NSwiZXhwIjoxNjgwOTQyOTc1fQ.veEEmt1ERRiyNmJEMZUOHigO-5_DovQ_36eCcnjNvkA"
+                }
+            }
+        ],
+        "month": "March"
+    }
+]
