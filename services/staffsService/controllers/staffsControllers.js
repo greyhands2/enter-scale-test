@@ -33,14 +33,7 @@ exports.createStaff = (req, res) => {
 exports.fetchStaff = factory.getOne(Staff);
 
 
-exports.fetchStaffSetPopulation =  (req, res, next) => {
-	
-	if(req.staff.role === 'staff') req.body.populate=[ {path: 'clockIns', select: 'verifyStatus link name'}];
-		
-	
-	
-	next();
-}
+
 //for a logged Staff to update Staff data
 
 exports.updateMe = catchAsync( async (req,res, next) => {
