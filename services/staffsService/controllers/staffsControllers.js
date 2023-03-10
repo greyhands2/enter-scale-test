@@ -15,7 +15,58 @@ exports.setMe = setMe;
 
 
 
-exports.fetchAllStaffs = factory.getAll(Staff);
+exports.fetchAllStaffs = catchAsync(async(req,res,next)=>{
+	let lookup = {
+		$lookup: {
+		  from: 'clockins',
+          localField: '_id',
+          foreignField: 'staff',
+          as: 'clockinDetails',
+		}
+	};
+
+
+	let unwind = {
+		$unwind: "$clockinDetails"
+	};
+
+
+	let project = {
+		$project: {
+			firstName:1,
+			lastName:1,
+			phone:1,
+			email:1,
+			'clockinDetails.month':1,
+			'clockinDetails.count':1
+		}
+	}
+
+	let stages = [lookup, unwind, project];
+
+
+	await Staff.aggregate(stages)
+	.then((docs)=>{
+		let returner, code;
+        if(!docs || docs.length ===0) [returner = {
+            status: "failure",
+            message:"Something is Wrong, Staffs not found"
+        }, code = 404];
+
+        
+       else [ returner = {
+            status:"success",
+           data:docs
+        }, code = 200 ]
+
+
+        return res.status(code).json(returner)
+	})
+	.catch((err)=>{
+		console.log('the err', err)
+        return next(new AppError("Something Went Wrong", 500));
+	})
+});
 
 
 
