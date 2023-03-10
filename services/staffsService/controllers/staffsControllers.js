@@ -16,6 +16,7 @@ exports.setMe = setMe;
 
 
 exports.fetchAllStaffs = catchAsync(async(req,res,next)=>{
+	console.log('i don reach here')
 	let lookup = {
 		$lookup: {
 		  from: 'clockins',
@@ -47,6 +48,7 @@ exports.fetchAllStaffs = catchAsync(async(req,res,next)=>{
 
 	await Staff.aggregate(stages)
 	.then((docs)=>{
+		console.log(docs)
 		let returner, code;
         if(!docs || docs.length ===0) [returner = {
             status: "failure",
