@@ -85,9 +85,9 @@ const StaffSchema = new mongoose.Schema({
 StaffSchema.virtual('clockIns', {
 
 	ref: 'ClockIn',
-	// the foreign field is the name of the relating field in the schema we wanna relate our tourSchema to
+	
 	foreignField: 'staff',
-	// and locally in tourSchema it is with _id that tourSchema can be referenced in the review model
+	
 	localField: '_id'
 	
 
